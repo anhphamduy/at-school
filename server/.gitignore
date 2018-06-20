@@ -1,0 +1,9 @@
+*.log
+*.pot
+*.pyc
+__pycache__/
+env/
+venv/
+migrations/
+keys/
+app.db
