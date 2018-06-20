@@ -21,7 +21,7 @@ class User(db.Model):
     firstname = db.Column(db.String(50), nullable=False)
     lastname = db.Column(db.String(50), nullable=False)
     email = db.Column(db.String(255))
-    password_hash = db.Column(db.String(128))
+    password = db.Column(db.String(128))
     access_level = db.Column(db.Integer)
     nfc_id = db.Column(db.String(30))
     school_id = db.Column(db.Integer)
@@ -34,11 +34,11 @@ class User(db.Model):
 
     def set_password(self, password):
         """Runs the passwords through a hash and appends."""
-        self.password_hash = generate_password_hash(str(password))
+        self.password = generate_password_hash(str(password))
 
     def check_password(self, password):
         """Checks a password against the hash."""
-        return check_password_hash(self.password_hash, password)
+        return check_password_hash(self.password, password)
 
     def send_message(self, to_user, content):
         message = Message(from_id=self.id, to_id=to_user.id, content=content)

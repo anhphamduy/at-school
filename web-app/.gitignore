@@ -5,4 +5,5 @@ __pycache__/
 env/
 venv/
 migrations/
+keys/
 app.db

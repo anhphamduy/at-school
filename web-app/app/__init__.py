@@ -22,6 +22,9 @@ def create_app(config_class=Config):
     login.init_app(app)
     cors.init_app(app)
 
+    from app.controllers.auth import bp as auth_bp
+    app.register_blueprint(auth_bp)
+
     return app
 
 from app import models
