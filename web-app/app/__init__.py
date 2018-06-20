@@ -25,6 +25,9 @@ def create_app(config_class=Config):
     from app.controllers.auth import bp as auth_bp
     app.register_blueprint(auth_bp)
 
+    from app.controllers.errors import bp as errors_bp
+    app.register_blueprint(errors_bp)
+
     return app
 
 from app import models

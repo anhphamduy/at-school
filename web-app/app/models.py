@@ -23,6 +23,8 @@ class User(db.Model):
     email = db.Column(db.String(255))
     password = db.Column(db.String(128))
     access_level = db.Column(db.Integer)
+    jwt = db.Column(db.String(10000))
+    num_of_logins = db.Column(db.Integer, default=0)
     nfc_id = db.Column(db.String(30))
     school_id = db.Column(db.Integer)
 
@@ -39,6 +41,24 @@ class User(db.Model):
     def check_password(self, password):
         """Checks a password against the hash."""
         return check_password_hash(self.password, password)
+
+    def login(self, jwt):
+        if self.jwt:
+            self.jwt = jwt
+            self.num_of_logins += 1
+            db.session.add(self)
+            db.session.commit()
+        else:
+            self.num_of_logins += 1
+            db.session.add(self)
+            db.session.commit()
+
+    def logout(self):
+        self.num_of_logins -= 1
+        if self.num_of_logins == 0:
+            self.jwt = None
+        db.session.add(self)
+        db.session.commit()
 
     def send_message(self, to_user, content):
         message = Message(from_id=self.id, to_id=to_user.id, content=content)

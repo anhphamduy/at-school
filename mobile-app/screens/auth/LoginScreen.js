@@ -7,44 +7,38 @@ import {
   TextInput,
   Image,
   Dimensions,
-  KeyboardAvoidingView,
+  KeyboardAvoidingView
 } from "react-native";
 import Icon from "react-native-vector-icons/EvilIcons";
 import { LinearGradient } from "expo";
-import Loader from "../../components/Loader"
+import Loader from "../../components/Loader";
+import { login } from "../../api/auth";
 
 export default class LoginScreen extends React.Component {
   state = {
     username: "",
     password: "",
-    spinnerVisible: false,
+    spinnerVisible: false
   };
 
   _login = async () => {
-    this.setState({ spinnerVisible: true })
+    this.setState({ spinnerVisible: true });
     try {
-      this.props.navigation.navigate("NfcReader");
-      // logging in for card manager
-      if (
-        this.state.username === "nfcWriter" &&
-        this.state.password === "nfcWriter"
-      ) {
-        // open nfc writer screen
-        this.props.navigation.navigate("NfcWriter");
-      } else if (
-        this.state.username === "nfcReader" &&
-        this.state.password === "nfcReader"
-      ) {
-        // open nfc reader screen here
-      }
+      const {token} = await login(this.state.username, this.state.password)
+      console.log(this.props)
+      this.props.navigation.setParams({ token: token })
+      console.log(this.props.navigation.params)
+
+      
+      
 
       // try logging in
-      this.setState({ spinnerVisible: false })
-      this.props.navigation.navigate('Teacher')
+      this.setState({ spinnerVisible: false });
+      this.props.navigation.navigate("Teacher");
     } catch (err) {
       // if can't log in, print out errors
       this.setState({ err: err.message });
-      this.setState({ spinnerVisible: false })
+      this.setState({ spinnerVisible: false });
     }
   };
 
@@ -72,7 +66,7 @@ export default class LoginScreen extends React.Component {
         />
         <FormInput
           secureTextEntry={true}
-          onChangeText={this.handlePassowrdUpdate}
+          onChangeText={this.handlePasswordUpdate}
           iconName="lock"
           placeholder="Password"
           value={this.state.password}
@@ -96,7 +90,7 @@ export default class LoginScreen extends React.Component {
             minHeight: Dimensions.get("window").height
           }}
         />
-        <Loader animating={this.state.spinnerVisible}/>
+        <Loader animating={this.state.spinnerVisible} />
       </KeyboardAvoidingView>
     );
   }
