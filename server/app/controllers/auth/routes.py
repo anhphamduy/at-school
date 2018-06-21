@@ -38,3 +38,31 @@ def signout():
     except KeyError:
         return redirect(url_for("errors.bad_request"))
     return redirect(url_for("errors.bad_request"))
+
+@bp.route("/auth/register", methods=["POST"])
+def register():
+    try:
+        data = request.get_json()
+        username = data["username"]
+        password = data["password"]
+        password1 = data["password1"]
+    except KeyError: 
+        return redirect(url_for("errors.bad_request"))
+    return redirect(url_for("errors.bad_request"))
+
+
+@bp.route("/auth/duplicateuser", methods=["POST"])
+def duplicate_user():
+    try:
+        data = request.get_json()
+        username = data["username"]
+
+        user = User.query.filter_by(username=username).first()
+        if user:
+            return jsonify({"duplicate": True})
+        
+
+        return jsonify({"duplicate": False})
+    except KeyError:
+        return redirect(url_for("errors.bad_request"))
+    return redirect(url_for("errors.bad_request"))

@@ -1,80 +1,50 @@
 import React from "react";
-import { Menu, Icon, Switch } from "antd";
+import { Menu, Icon } from "antd";
 import "antd/dist/antd.css";
-const { SubMenu } = Menu;
 
 export default class NavNotLoggedIn extends React.Component {
   state = {
-    mode: "inline",
-    theme: "light"
   };
-  changeMode = value => {
-    this.setState({
-      mode: value ? "vertical" : "inline"
-    });
-  };
-  changeTheme = value => {
-    this.setState({
-      theme: value ? "dark" : "light"
-    });
-  };
+
   render() {
     return (
       <Menu
-        style={{ width: 256, height: "100vh" }}
+        style={{
+          width: "15%",
+          minHeight: "100vh",
+          position: "fixed"
+        }}
+
         defaultSelectedKeys={["1"]}
         defaultOpenKeys={["sub1"]}
-        mode={this.state.mode}
-        theme={this.state.theme}
+        mode="inline"
+        onClick={(item, key, path) => this.props.changeMode(item, key, path)}        
       >
-        <div style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
-          <img            
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center"
+          }}
+        >
+          <img
             style={{
               width: "50px",
               marginTop: "3vh",
-              marginBottom: "2vh"
+              marginBottom: "0.1vh"
             }}
             src="/gngc.png"
           />
         </div>
-        <Menu.Item key="1">
-          <Icon type="mail" />
-          Navigation One
+        <hr style={{ margin: "15px 35px 30px 35px", border: "0.5px solid rgba(0,0,0,.1)"}}/>
+        <Menu.Item key="login">
+          <Icon type="user" />
+          Sign In
         </Menu.Item>
-        <Menu.Item key="2">
-          <Icon type="calendar" />
-          Navigation Two
+        <Menu.Item key="register">
+          <Icon type="user-add"/>
+          Register
         </Menu.Item>
-        <SubMenu
-          key="sub1"
-          title={
-            <span>
-              <Icon type="appstore" />
-              <span>Navigation Three</span>
-            </span>
-          }
-        >
-          <Menu.Item key="3">Option 3</Menu.Item>
-          <Menu.Item key="4">Option 4</Menu.Item>
-          <SubMenu key="sub1-2" title="Submenu">
-            <Menu.Item key="5">Option 5</Menu.Item>
-            <Menu.Item key="6">Option 6</Menu.Item>
-          </SubMenu>
-        </SubMenu>
-        <SubMenu
-          key="sub2"
-          title={
-            <span>
-              <Icon type="setting" />
-              <span>Navigation Four</span>
-            </span>
-          }
-        >
-          <Menu.Item key="7">Option 7</Menu.Item>
-          <Menu.Item key="8">Option 8</Menu.Item>
-          <Menu.Item key="9">Option 9</Menu.Item>
-          <Menu.Item key="10">Option 10</Menu.Item>
-        </SubMenu>
       </Menu>
     );
   }

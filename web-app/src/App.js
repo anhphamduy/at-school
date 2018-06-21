@@ -1,14 +1,26 @@
 import React, { Component } from "react";
-import logo from "./logo.svg";
 import NavNotLoggedIn from "./components/navs/NavNotLoggedIn";
-import ContentContainer from "./components/contents/ContentContainer";
+import ContentNotLoggedIn from "./components/contents/ContentNotLoggedIn";
 
 class App extends Component {
+  state = {
+    login: false,
+    mode: "login"
+  };
+
+  _changeModeNotLoggedIn = item => {
+    this.setState({ mode: item.key });
+  };
+
   render() {
     return (
-      <div style={{display: "flex", flexDirection: "row"}}> 
-        <NavNotLoggedIn />
-        <ContentContainer />
+      <div>
+        <div >
+          <NavNotLoggedIn changeMode={this._changeModeNotLoggedIn} />
+        </div>
+        <div style={{ marginLeft: "15%" }}>
+          <ContentNotLoggedIn mode={this.state.mode} />
+        </div>
       </div>
     );
   }
