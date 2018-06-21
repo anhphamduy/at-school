@@ -1,6 +1,8 @@
 import React, { Component } from "react";
+import { Layout } from "antd";
 import NavNotLoggedIn from "./components/navs/NavNotLoggedIn";
 import ContentNotLoggedIn from "./components/contents/ContentNotLoggedIn";
+
 
 class App extends Component {
   state = {
@@ -8,19 +10,23 @@ class App extends Component {
     mode: "login"
   };
 
-  _changeModeNotLoggedIn = item => {
-    this.setState({ mode: item.key });
+  _changeModeNotLoggedIn = mode => {
+    this.setState({ mode });
   };
 
   render() {
     return (
       <div>
-        <div >
-          <NavNotLoggedIn changeMode={this._changeModeNotLoggedIn} />
-        </div>
-        <div style={{ marginLeft: "15%" }}>
-          <ContentNotLoggedIn mode={this.state.mode} />
-        </div>
+      <Layout style={{minHeight: "100%"}}>
+        
+        <NavNotLoggedIn mode={this.state.mode} changeMode={this._changeModeNotLoggedIn} />
+        <Layout>
+          <ContentNotLoggedIn
+            changeMode={this._changeModeNotLoggedIn}
+            mode={this.state.mode}
+          />
+        </Layout>
+      </Layout>
       </div>
     );
   }

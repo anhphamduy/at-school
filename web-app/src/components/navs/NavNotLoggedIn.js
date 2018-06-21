@@ -1,51 +1,95 @@
 import React from "react";
-import { Menu, Icon } from "antd";
+import { Layout, Menu, Icon } from "antd";
 import "antd/dist/antd.css";
+import "./Navs.css";
+
+const { Sider } = Layout;
 
 export default class NavNotLoggedIn extends React.Component {
   state = {
+    collapsed: true,
   };
+
+  _toggle = () => {
+    this.setState({
+      collapsed: !this.state.collapsed
+    });
+  };
+
+  _changeMode = item => {
+    if (item.key === "1") {
+      return "login";
+    }
+    return "register";
+  };
+
+  changeMenuSelection = menuKey => {
+    this.setState({
+      selectedKeys: [menuKey]
+    })
+  }
+  
 
   render() {
     return (
-      <Menu
+      <Sider
+        theme="light"
+        onMouseEnter={this._toggle}
+        onMouseLeave={this._toggle}
+        trigger={null}
+        collapsible
+        collapsed={this.state.collapsed}
         style={{
-          width: "15%",
-          minHeight: "100vh",
-          position: "fixed"
+          borderRightColor: "rgb(232, 232, 232)",
+          borderRightWidth: "1px",
+          borderRightStyle: "solid"
         }}
-
-        defaultSelectedKeys={["1"]}
-        defaultOpenKeys={["sub1"]}
-        mode="inline"
-        onClick={(item, key, path) => this.props.changeMode(item, key, path)}        
       >
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center"
-          }}
-        >
-          <img
+        <div>
+          <div
             style={{
-              width: "50px",
-              marginTop: "3vh",
-              marginBottom: "0.1vh"
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center"
             }}
-            src="/gngc.png"
+          >
+            <img
+              alt="Gungahlin College logo"
+              style={{
+                width: "30px",
+                marginTop: "3vh",
+                marginBottom: "0.1vh"
+              }}
+              src="/gngc.png"
+            />
+          </div>
+          <hr
+            style={{
+              margin: "20px",
+              borderColor: "hsla(0,0%,100%,.5)",
+              borderWidth: "0.2"
+            }}
           />
         </div>
-        <hr style={{ margin: "15px 35px 30px 35px", border: "0.5px solid rgba(0,0,0,.1)"}}/>
-        <Menu.Item key="login">
-          <Icon type="user" />
-          Sign In
-        </Menu.Item>
-        <Menu.Item key="register">
-          <Icon type="user-add"/>
-          Register
-        </Menu.Item>
-      </Menu>
+        <Menu
+          theme="light"
+          mode="inline"
+          onClick={item => {
+            this.changeMenuSelection(item.key)
+            this.props.changeMode(this._changeMode(item));
+          }}
+          selectedKeys={this.props.mode === "login" ? ["1"] : ["2"]}
+        >
+          <Menu.Item key="1">
+            <Icon type="user" />
+            <span>Log In</span>
+          </Menu.Item>
+          <Menu.Item key="2">
+            <Icon type="user-add" />
+            <span>Register</span>
+          </Menu.Item>
+        </Menu>
+      </Sider>
     );
   }
 }

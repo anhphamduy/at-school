@@ -43,3 +43,19 @@ export const checkDuplicateUser = async username => {
   const errMessage = await response.text();
   throw new Error(errMessage);
 };
+
+export const register = async (data, callback) => {
+  const response = await fetch("http://127.0.0.1:5000/auth/register", {
+    method: "POST",
+    headers: { "content-type": "application/json" },
+    body: JSON.stringify(data)
+  });
+
+  if (response.ok) {
+    callback();
+    return
+  }
+
+  const errMessage = await response.text();
+  throw new Error(errMessage);
+}

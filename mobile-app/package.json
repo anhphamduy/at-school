@@ -2,12 +2,15 @@
   "main": "node_modules/expo/AppEntry.js",
   "private": true,
   "dependencies": {
+    "eslint": "^4.19.1",
     "expo": "^28.0.0",
     "react": "16.3.1",
     "react-native": "https://github.com/expo/react-native/archive/sdk-28.0.0.tar.gz",
-    "react-native-elements": "^0.19.1",
     "react-native-gifted-chat": "^0.4.3",
+    "react-native-maps": "^0.21.0",
+    "react-native-reanimated": "^1.0.0-alpha.4",
     "react-native-vector-icons": "^4.6.0",
-    "react-navigation": "^2.3.1"
+    "react-navigation": "^2.3.1",
+    "ws": "^5.2.0"
   }
 }

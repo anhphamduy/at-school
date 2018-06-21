@@ -1,0 +1,7 @@
+ul.ant-menu {
+    border-right: 0px solid white;
+}
+
+ul.ant-menu-inline-collapsed {
+    border-right: 1px solid rgb(232, 232, 232);
+}

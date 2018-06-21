@@ -1,44 +1,57 @@
 import React from "react";
 import Login from "../auth/Login";
 import Register from "../auth/Register";
-import { Row, Col, Menu, Icon } from "antd";
+import { Row, Col, Menu, Layout } from "antd";
+const { Header, Content } = Layout;
 
-const SubMenu = Menu.SubMenu;
-const MenuItemGroup = Menu.ItemGroup;
 
 export default class ContentNotLoggedIn extends React.Component {
   state = {
-    login: false,
+    login: false
   };
 
   render() {
     return (
-      <div style={{ width: "100%"}}>
-        <Menu
-          onClick={this.handleClick}
-          selectedKeys={[this.state.current]}
-          mode="horizontal"
-          style={{ width: "100%"}}
-        >
-          <Menu.Item key="mail" style={{ textTransform: "capitalize", fontSize: "20px" }}>
-            { this.props.mode }
-          </Menu.Item>
-        </Menu>
-        <div
+      <Layout>
+        <Header style={{ background: "#fff", padding: 0 }}>
+          <Menu
+            onClick={this.handleClick}
+            selectedKeys={[this.state.current]}
+            mode="horizontal"
+          >
+            <Menu.Item
+              key="1"
+              style={{ textTransform: "capitalize", fontSize: "20px" }}
+            >
+              {this.props.mode}
+            </Menu.Item>
+          </Menu>
+        </Header>
+        <Content
           style={{
-            height: "100vh",
-            width: "100%"
+            background: "#fff"
           }}
         >
-          <Row>
-            <Col span={1} />
-            <Col span={22} style={{ marginTop: "5vh" }}>
-              {this.props.mode == "login" ? <Login /> : <Register />}
-            </Col>
-            <Col span={1} />
-          </Row>
-        </div>
-      </div>
+          <div
+            style={{
+              height: "100vh",
+              width: "100%"
+            }}
+          >
+            <Row>
+              <Col span={1} />
+              <Col span={22} style={{ marginTop: "5vh" }}>
+                {this.props.mode === "login" ? (
+                  <Login />
+                ) : (
+                  <Register changeMode={this.props.changeMode} />
+                )}
+              </Col>
+              <Col span={1} />
+            </Row>
+          </div>
+        </Content>
+      </Layout>
     );
   }
 }
