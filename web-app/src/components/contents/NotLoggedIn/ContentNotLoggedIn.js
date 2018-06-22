@@ -1,11 +1,10 @@
 import React from "react";
-import Login from "../auth/Login";
-import Register from "../auth/Register";
-import { Row, Col, Menu, Layout } from "antd";
 import { CSSTransition } from "react-transition-group";
-import "./animation.css"
-
-const { Header, Content } = Layout;
+import { Menu, Layout } from "antd";
+import ContentContainer from "../ContentContainer";
+import Login from "../../auth/Login";
+import Register from "../../auth/Register";
+import "./animation.css";
 
 export default class ContentNotLoggedIn extends React.Component {
   state = {
@@ -16,32 +15,16 @@ export default class ContentNotLoggedIn extends React.Component {
     return (
       <Layout>
         <HorizontalNav current={this.props.current} mode={this.props.mode} />
-        <Content
-          style={{
-            background: "#fff"
-          }}
-        >
-          <div
-            style={{
-              height: "100vh",
-              width: "100%"
-            }}
-          >
-            <Row>
-              <Col span={1} />
-              <Col span={22} style={{ marginTop: "5vh" }}>
-                <ActualContent
-                  changeUserType={this.props.changeUserType}
-                  animation={this.props.animation}
-                  mode={this.props.mode}
-                  changeMode={this.props.changeMode}
-                  changeAnimation={this.props.changeAnimation}
-                />
-              </Col>
-              <Col span={1} />
-            </Row>
-          </div>
-        </Content>
+        <ContentContainer>
+          <ActualContent
+            changeUserType={this.props.changeUserType}
+            animation={this.props.animation}
+            mode={this.props.mode}
+            changeMode={this.props.changeMode}
+            changeAnimation={this.props.changeAnimation}
+            changeLoading={this.props.changeLoading}
+          />
+        </ContentContainer>
       </Layout>
     );
   }
@@ -49,7 +32,7 @@ export default class ContentNotLoggedIn extends React.Component {
 
 const HorizontalNav = props => {
   return (
-    <Header style={{ background: "#fff", padding: 0 }}>
+    <Layout.Header style={{ background: "#fff", padding: 0 }}>
       <Menu selectedKeys={[props.current]} mode="horizontal">
         <Menu.Item
           key="1"
@@ -58,7 +41,7 @@ const HorizontalNav = props => {
           {props.mode}
         </Menu.Item>
       </Menu>
-    </Header>
+    </Layout.Header>
   );
 };
 
@@ -70,11 +53,6 @@ class ActualContent extends React.Component {
   };
 
   render() {
-    // return this.props.mode === "login" ? (
-    //   <Login />
-    // ) : (
-    //   <Register changeMode={this.props.changeMode} />
-    // );
     return (
       <div>
         <CSSTransition
@@ -89,7 +67,7 @@ class ActualContent extends React.Component {
             this.props.changeAnimation();
           }}
         >
-          <Login changeUserType={this.props.changeUserType}/>
+          <Login changeLoading={this.props.changeLoading} changeUserType={this.props.changeUserType} />
         </CSSTransition>
         <CSSTransition
           in={
@@ -105,7 +83,7 @@ class ActualContent extends React.Component {
             this.props.changeAnimation();
           }}
         >
-          <Register changeMode={this.props.changeMode} />
+          <Register changeLoading={this.props.changeLoading} changeMode={this.props.changeMode} />
         </CSSTransition>
       </div>
     );

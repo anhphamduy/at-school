@@ -1,94 +1,46 @@
 import React, { Component } from "react";
-import { Layout } from "antd";
-import NavNotLoggedIn from "./components/navs/NavNotLoggedIn";
-import ContentNotLoggedIn from "./components/contents/ContentNotLoggedIn";
+import AppNotLoggedIn from "./components/AppNotLoggedIn";
+import AppTeacher from "./components/AppTeacher";
+import Spinner from "./components/Spinner";
 
 class App extends Component {
   state = {
-    user: "anomynous",
-    token: ""
-  };
-
-  changeUserType = (type, token) => {
-    this.setState({ user: type, token });
-    console.log(token)
-  };
-
-  render() {
-    if (this.state.user === "anomynous") {
-      return <AppNotLoggedIn changeUserType={this.changeUserType} />;
-    }
-    if (this.state.user === "teacher") {
-      return <h1>"teacher"</h1>
-    }
-  }
-}
-
-class AppNotLoggedIn extends React.Component {
-  state = {
-    login: false,
-    mode: "login",
-    animation: {
-      navNotLoggedIn: {
-        finishedLoginAnimation: true,
-        finishedRegisterAnimation: true
-      }
+    loading: false,
+    userInfo: {
+      userType: "anomynous"
     }
   };
 
-  changeAuthAnimation = () => {
-    this.setState({
-      animation: {
-        navNotLoggedIn: {
-          finishedLoginAnimation: true,
-          finishedRegisterAnimation: true
-        }
-      }
-    });
+  changeUserType = userInfo => {
+    if (userInfo.userType === "anomynous") {
+      this.setState({ userInfo: { userType: "anomynous" } });
+      console.log(this.state);
+    } else {
+      this.setState({ userInfo: { ...userInfo } });
+    }
   };
 
-  _changeModeNotLoggedIn = mode => {
-    if (mode === "register") {
-      this.setState({
-        animation: {
-          navNotLoggedIn: {
-            finishedLoginAnimation: false,
-            finishedRegisterAnimation: true
-          }
-        }
-      });
-    } else if (mode === "login") {
-      this.setState({
-        animation: {
-          navNotLoggedIn: {
-            finishedLoginAnimation: true,
-            finishedRegisterAnimation: false
-          }
-        }
-      });
-    }
-
-    this.setState({ mode });
+  changeLoading = () => {
+    this.setState({ loading: !this.state.loading });
   };
 
   render() {
     return (
       <div>
-        <Layout style={{ minHeight: "100%" }}>
-          <NavNotLoggedIn
-            mode={this.state.mode}
-            changeMode={this._changeModeNotLoggedIn}
+        {this.state.loading ? <Spinner /> : null}
+        {this.state.userInfo.userType === "anomynous" ? (
+          <AppNotLoggedIn
+            changeUserType={this.changeUserType}
+            changeLoading={this.changeLoading}
           />
-          <Layout>
-            <ContentNotLoggedIn
-              changeUserType={this.props.changeUserType}
-              changeMode={this._changeModeNotLoggedIn}
-              mode={this.state.mode}
-              animation={this.state.animation.navNotLoggedIn}
-              changeAnimation={this.changeAuthAnimation}
-            />
-          </Layout>
-        </Layout>
+        ) : null}
+        {this.state.userInfo.userType === "teacher" ? (
+          <AppTeacher
+            changeLoading={this.changeLoading}
+            changeUserType={this.changeUserType}
+            userInfo={this.state.userInfo}
+          />
+        ) : null}
       </div>
     );
   }

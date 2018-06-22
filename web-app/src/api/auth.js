@@ -1,28 +1,30 @@
-export const login = async (username, password, callback=() => {}) => {
+export const login = async (username, password, callback = () => {}) => {
   const response = await fetch("http://127.0.0.1:5000/auth/signin", {
     method: "POST",
     headers: { "content-type": "application/json" },
     body: JSON.stringify({ username, password })
   });
-  const data = await response.json()
+  const data = await response.json();
   if (data.success) {
-    callback()
-    return data
+    callback();
+    return data;
   }
 
-  const errMessage = await data.message
+  const errMessage = await data.message;
   throw new Error(errMessage);
 };
 
-export const logout = async token => {
-  const response = await fetch("http://127.0.0.1:5000/auth/signin", {
+export const logout = async (token, callback = () => {}) => {
+  const response = await fetch("http://127.0.0.1:5000/auth/signout", {
     method: "POST",
     headers: { "content-type": "application/json" },
     body: JSON.stringify({ token })
   });
 
   if (response.ok) {
-    return response.json();
+    const data = await response.json();
+    callback();
+    return data.success;
   }
 
   const errMessage = await response.text();
@@ -38,7 +40,7 @@ export const checkDuplicateUser = async username => {
 
   if (response.ok) {
     const data = await response.json();
-    return data.duplicate
+    return data.duplicate;
   }
 
   const errMessage = await response.text();
@@ -54,9 +56,9 @@ export const register = async (data, callback) => {
 
   if (response.ok) {
     callback();
-    return
+    return;
   }
 
   const errMessage = await response.text();
   throw new Error(errMessage);
-}
+};

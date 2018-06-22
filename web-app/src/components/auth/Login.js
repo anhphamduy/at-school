@@ -12,6 +12,7 @@ class NormalLoginForm extends React.Component {
     let err = false;
     this.props.form.validateFields((err, values) => {
       if (!err) {
+        this.props.changeLoading()
         vals = values;
       } else {
         err = true;
@@ -19,9 +20,8 @@ class NormalLoginForm extends React.Component {
     });
     try {
       if (!err) {
-        const data = await login(vals.username, vals.password);
-        this.props.changeUserType("teacher", data.token)
-        console.log(this.props);
+        const data = await login(vals.username, vals.password, this.props.changeLoading);
+        this.props.changeUserType(data)
       }
     } catch (error) {
       console.log(error);

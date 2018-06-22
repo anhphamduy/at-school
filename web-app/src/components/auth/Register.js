@@ -2,7 +2,6 @@ import React from "react";
 import { Form, Input, Tooltip, Icon, Select, Checkbox, Button } from "antd";
 import "antd/dist/antd.css";
 import { checkDuplicateUser, register } from "../../api/auth";
-import Spinner from "../Spinner";
 
 const FormItem = Form.Item;
 const Option = Select.Option;
@@ -20,7 +19,7 @@ class RegistrationForm extends React.Component {
   };
   handleSubmit = e => {
     e.preventDefault();
-    this.setState({ spinnerVisible: true });
+    this.props.changeLoading()
     this.props.form.validateFieldsAndScroll((err, values) => {
       if (!values.username) {
         this.setState({
@@ -43,7 +42,7 @@ class RegistrationForm extends React.Component {
       if (!err) {
         register(values, () => {
           this.props.changeMode("login");
-          this.setState({ spinnerVisible: false });
+          this.props.changeLoading()
         });
       }
     });
@@ -156,7 +155,6 @@ class RegistrationForm extends React.Component {
 
     return (
       <Form onSubmit={this.handleSubmit}>
-        {this.state.spinnerVisible ? <Spinner /> : ""}
         <FormItem {...formItemLayout} label="E-mail">
           {getFieldDecorator("email", {
             rules: [
