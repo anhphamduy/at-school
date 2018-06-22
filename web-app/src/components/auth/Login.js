@@ -1,18 +1,33 @@
 import React from "react";
 import { Form, Icon, Input, Button, Checkbox, Row, Col } from "antd";
 import "antd/dist/antd.css";
+import { login } from "../../api/auth";
 
 const FormItem = Form.Item;
 
 class NormalLoginForm extends React.Component {
-  handleSubmit = e => {
+  handleSubmit = async e => {
     e.preventDefault();
+    let vals = "";
+    let err = false;
     this.props.form.validateFields((err, values) => {
       if (!err) {
-        console.log("Received values of form: ", values);
+        vals = values;
+      } else {
+        err = true;
       }
     });
+    try {
+      if (!err) {
+        const data = await login(vals.username, vals.password);
+        this.props.changeUserType("teacher", data.token)
+        console.log(this.props);
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
+
   render() {
     const { getFieldDecorator } = this.props.form;
     return (
@@ -20,7 +35,7 @@ class NormalLoginForm extends React.Component {
         <Col span={8}>
           <Form onSubmit={this.handleSubmit} className="login-form">
             <FormItem>
-              {getFieldDecorator("userName", {
+              {getFieldDecorator("username", {
                 rules: [
                   { required: true, message: "Please input your username!" }
                 ]
