@@ -13,7 +13,7 @@ export default class ContentContainer extends React.Component {
       >
         <div
           style={{
-            height: "100vh",
+            minHeight: "100vh",
             width: "100%"
           }}
         >

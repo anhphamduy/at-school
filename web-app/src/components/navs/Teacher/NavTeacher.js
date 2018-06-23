@@ -13,15 +13,17 @@ export default class NavNotLoggedIn extends React.Component {
 
   changeMenuSelection = menuKey => {
     if (menuKey === "6") {
-      this.props.changeLoading()
+      this.props.changeLoading();
       logout(this.props.userInfo.token, () => {
-        this.props.changeLoading()
+        this.props.changeLoading();
         this.props.changeUserType({ userType: "anomynous" });
       });
+    } else {
+      this.props.changeMenu(menuKey)
+      this.setState({
+        selectedKeys: [menuKey]
+      });
     }
-    this.setState({
-      selectedKeys: [menuKey]
-    });
   };
 
   render() {
@@ -35,7 +37,7 @@ export default class NavNotLoggedIn extends React.Component {
             this.changeMenuSelection(item.key);
           }}
           selectedKeys={
-            !this.state.selectedKeys ? ["2"] : this.state.selectedKeys
+            !this.state.selectedKeys ? ["4"] : this.state.selectedKeys
           }
         >
           <hr

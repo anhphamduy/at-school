@@ -4,7 +4,7 @@ import { Menu, Layout } from "antd";
 import ContentContainer from "../ContentContainer";
 import Login from "../../auth/Login";
 import Register from "../../auth/Register";
-import "./animation.css";
+import "../../../animations/slideUpDown.css"
 
 export default class ContentNotLoggedIn extends React.Component {
   state = {
@@ -61,7 +61,7 @@ class ActualContent extends React.Component {
             this.props.animation.finishedRegisterAnimation
           }
           timeout={300}
-          classNames="message"
+          classNames="slideUpDown"
           unmountOnExit
           onExited={() => {
             this.props.changeAnimation();
@@ -78,7 +78,7 @@ class ActualContent extends React.Component {
           transitionLeave={true}
           timeout={300}
           unmountOnExit
-          classNames="message"
+          classNames="slideUpDown"
           onExited={() => {
             this.props.changeAnimation();
           }}

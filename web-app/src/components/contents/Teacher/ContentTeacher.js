@@ -1,10 +1,10 @@
 import React from "react";
 import { Menu, Layout } from "antd";
 import ContentContainer from "../ContentContainer";
+import Messages from "./messages/Messages"
 
-export default class ContentNotLoggedIn extends React.Component {
+export default class ContentTeacher extends React.Component {
   state = {
-    login: false
   };
 
   render() {
@@ -12,7 +12,8 @@ export default class ContentNotLoggedIn extends React.Component {
       <Layout>
         <HorizontalNav mode={"Login"} />
         <ContentContainer>
-          Hello
+          
+          {this.props.currentMenu === "5" ? <Messages /> : "Fuck You"}
         </ContentContainer>
       </Layout>
     );

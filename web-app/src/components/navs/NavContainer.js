@@ -14,7 +14,7 @@ export default class NavContainer extends React.Component {
 
   render() {
     return (
-      <Layout.Sider
+      <Layout.Sider 
         theme="light"
         onMouseOver={() => this.setState({collapsed: false})}
         onMouseLeave={() => this.setState({collapsed: true})}
@@ -24,10 +24,11 @@ export default class NavContainer extends React.Component {
         style={{
           borderRightColor: "rgb(232, 232, 232)",
           borderRightWidth: "1px",
-          borderRightStyle: "solid"
+          borderRightStyle: "solid",
         }}
-      >
+      ><div style={{position: "fixed"}}>
         {this.props.children}
+        </div>
       </Layout.Sider>
     );
   }
