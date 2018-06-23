@@ -17,13 +17,17 @@ export default class ContentContainer extends React.Component {
             width: "100%"
           }}
         >
-          <Row>
-            <Col span={1} />
-            <Col span={22} style={{ marginTop: "5vh" }}>
-              {this.props.children}
-            </Col>
-            <Col span={1} />
-          </Row>
+          {this.props.noGrid ? (
+            this.props.children
+          ) : (
+            <Row>
+              <Col span={1} />
+              <Col span={22} style={{ marginTop: "5vh" }}>
+                {this.props.children}
+              </Col>
+              <Col span={1} />
+            </Row>
+          )}
         </div>
       </Content>
     );

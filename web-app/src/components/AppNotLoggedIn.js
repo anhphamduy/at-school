@@ -12,7 +12,14 @@ export default class AppNotLoggedIn extends React.Component {
         finishedLoginAnimation: true,
         finishedRegisterAnimation: true
       }
-    }
+    },
+    layoutMarginLeft: 80
+  };
+
+  changeLayoutMarginLeft = value => {
+    this.setState({
+      layoutMarginLeft: value
+    });
   };
 
   changeAuthAnimation = () => {
@@ -55,6 +62,7 @@ export default class AppNotLoggedIn extends React.Component {
       <div>
         <Layout style={{ minHeight: "100%" }}>
           <NavNotLoggedIn
+            changeLayoutMarginLeft={this.changeLayoutMarginLeft}
             mode={this.state.mode}
             changeMode={this._changeModeNotLoggedIn}
           />
@@ -66,6 +74,7 @@ export default class AppNotLoggedIn extends React.Component {
               animation={this.state.animation.navNotLoggedIn}
               changeAnimation={this.changeAuthAnimation}
               changeLoading={this.props.changeLoading}
+              layoutMarginLeft={this.state.layoutMarginLeft}
             />
           </Layout>
         </Layout>

@@ -21,7 +21,7 @@ export default class NavNotLoggedIn extends React.Component {
 
   render() {
     return (
-      <NavContainer>
+      <NavContainer changeLayoutMarginLeft={this.props.changeLayoutMarginLeft}>
         <SchoolLogo />
         <hr
           style={{

@@ -4,7 +4,7 @@ import { Menu, Layout } from "antd";
 import ContentContainer from "../ContentContainer";
 import Login from "../../auth/Login";
 import Register from "../../auth/Register";
-import "../../../animations/slideUpDown.css"
+import "../../../animations/slideUpDown.css";
 
 export default class ContentNotLoggedIn extends React.Component {
   state = {
@@ -13,7 +13,12 @@ export default class ContentNotLoggedIn extends React.Component {
 
   render() {
     return (
-      <Layout>
+      <Layout
+        style={{
+          marginLeft: this.props.layoutMarginLeft,
+          transition: "margin .2s"
+        }}
+      >
         <HorizontalNav current={this.props.current} mode={this.props.mode} />
         <ContentContainer>
           <ActualContent
@@ -67,7 +72,10 @@ class ActualContent extends React.Component {
             this.props.changeAnimation();
           }}
         >
-          <Login changeLoading={this.props.changeLoading} changeUserType={this.props.changeUserType} />
+          <Login
+            changeLoading={this.props.changeLoading}
+            changeUserType={this.props.changeUserType}
+          />
         </CSSTransition>
         <CSSTransition
           in={
@@ -83,7 +91,10 @@ class ActualContent extends React.Component {
             this.props.changeAnimation();
           }}
         >
-          <Register changeLoading={this.props.changeLoading} changeMode={this.props.changeMode} />
+          <Register
+            changeLoading={this.props.changeLoading}
+            changeMode={this.props.changeMode}
+          />
         </CSSTransition>
       </div>
     );

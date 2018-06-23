@@ -14,10 +14,16 @@ export default class NavContainer extends React.Component {
 
   render() {
     return (
-      <Layout.Sider 
+      <Layout.Sider
         theme="light"
-        onMouseOver={() => this.setState({collapsed: false})}
-        onMouseLeave={() => this.setState({collapsed: true})}
+        onMouseOver={() => {
+          this.setState({ collapsed: false });
+          this.props.changeLayoutMarginLeft(200);
+        }}
+        onMouseLeave={() => {
+          this.setState({ collapsed: true });
+          this.props.changeLayoutMarginLeft(80);
+        }}
         trigger={null}
         collapsible
         collapsed={this.state.collapsed}
@@ -25,10 +31,13 @@ export default class NavContainer extends React.Component {
           borderRightColor: "rgb(232, 232, 232)",
           borderRightWidth: "1px",
           borderRightStyle: "solid",
+          height: "100vh",
+          bottom: 0,
+          top: 0,
+          position: "fixed"
         }}
-      ><div style={{position: "fixed"}}>
+      >
         {this.props.children}
-        </div>
       </Layout.Sider>
     );
   }

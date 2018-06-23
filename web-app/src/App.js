@@ -15,13 +15,12 @@ class App extends Component {
     },
     userInfo: {
       userType: "anomynous"
-    }
+    },
   };
 
   changeUserType = userInfo => {
     if (userInfo.userType === "anomynous") {
       this.setState({ userInfo: { userType: "anomynous" } });
-      console.log(this.state);
     } else {
       this.setState({ userInfo: { ...userInfo } });
     }
@@ -51,28 +50,15 @@ class App extends Component {
   }
 }
 
-const TransitionComponent = props => {
-  return (
-    <CSSTransition in={props.in} timeout={300} unmountOnExit classNames="fade">
-      {props.children}
-    </CSSTransition>
-  );
-};
-
 const AnomynousComponent = props => {
-  return (
-    <TransitionComponent in={props.in}>
-      <AppNotLoggedIn {...props} />
-    </TransitionComponent>
-  );
+  return props.in ? <AppNotLoggedIn {...props} /> : null
 };
 
 const TeacherComponent = props => {
-  return (
-    <TransitionComponent in={props.in}>
-      <AppTeacher {...props} />
-    </TransitionComponent>
-  );
+  return props.in ? <AppTeacher {...props} /> : null
 };
+
+
+
 
 export default App;
