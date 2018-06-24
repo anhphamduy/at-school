@@ -15,8 +15,7 @@ export default class ContentNotLoggedIn extends React.Component {
     return (
       <Layout
         style={{
-          marginLeft: this.props.layoutMarginLeft,
-          transition: "margin .2s"
+          marginLeft: 80,
         }}
       >
         <HorizontalNav current={this.props.current} mode={this.props.mode} />

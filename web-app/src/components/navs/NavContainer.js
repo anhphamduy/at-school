@@ -18,11 +18,9 @@ export default class NavContainer extends React.Component {
         theme="light"
         onMouseOver={() => {
           this.setState({ collapsed: false });
-          this.props.changeLayoutMarginLeft(200);
         }}
         onMouseLeave={() => {
           this.setState({ collapsed: true });
-          this.props.changeLayoutMarginLeft(80);
         }}
         trigger={null}
         collapsible
@@ -34,7 +32,8 @@ export default class NavContainer extends React.Component {
           height: "100vh",
           bottom: 0,
           top: 0,
-          position: "fixed"
+          position: "fixed",
+          zIndex: 100,
         }}
       >
         {this.props.children}
