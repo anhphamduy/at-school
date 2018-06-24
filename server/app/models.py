@@ -1,5 +1,6 @@
 from app import db
 from datetime import datetime
+from hashlib import md5
 from werkzeug.security import generate_password_hash, check_password_hash
 
 class Message(db.Model):
@@ -37,18 +38,23 @@ class User(db.Model):
     def set_password(self, password):
         """Runs the passwords through a hash and appends."""
         self.password = generate_password_hash(str(password))
+    
+    def get_default_avatar(self, size):
+        digest = md5(self.username.lower().encode('utf-8')).hexdigest()
+        return 'https://www.gravatar.com/avatar/{}?d=identicon&s={}'.format(
+            digest, size)
 
     def check_password(self, password):
         """Checks a password against the hash."""
         return check_password_hash(self.password, password)
 
     def login(self, jwt):
-        if self.jwt:
-            self.jwt = jwt
+        if self.jwt:  
             self.num_of_logins += 1
             db.session.add(self)
             db.session.commit()
         else:
+            self.jwt = jwt
             self.num_of_logins += 1
             db.session.add(self)
             db.session.commit()

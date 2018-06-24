@@ -18,13 +18,19 @@ def signin():
             token = jwt.encode({
                 "id": user.id,
                 "username": username,
-                "public_key": public_key,
             }, private_key, algorithm="RS256").decode("utf-8")
             user.login(token)
-            return jsonify({"token": token})
+            fullname = user.firstname + " " + user.lastname
+            return jsonify({
+                "token": token, 
+                "success": True, 
+                "avatarUrl": user.get_default_avatar(256), 
+                "userType": "teacher",
+                "fullname": fullname
+                })
     except KeyError:
         return redirect(url_for("errors.bad_request"))
-    return redirect(url_for("errors.bad_request"))
+    return jsonify({"success": False, "message": "Username or password is not correct."})
 
 
 @bp.route("/auth/signout", methods=["POST"])
@@ -32,8 +38,8 @@ def signout():
     try:
         data = request.get_json()
         token = data["token"]
-        payload = jwt.decode(token, current_app.config["JWT_KEY_PUBLIC"], algorithms=['RS256'])
-        user = User.query.filter_by(id=payload.id).first()
+        payload = jwt.decode(token, open(current_app.config["JWT_KEY_PUBLIC"]).read(), algorithms=['RS256'])
+        user = User.query.filter_by(id=payload["id"]).first()
         user.logout()
         return jsonify({"success": True})
     except KeyError:
@@ -51,26 +57,21 @@ def register():
         lastname = data["lastname"]
         email = data["email"]
         access_level = data["accessLevel"]
-        print("Check access level")
-        # do validations
+
         if access_level not in ["1", "2", 1, 2]:
             return redirect(url_for("errors.bad_request"))
 
-        # check password
-        print(password, password1)
         if (password != password1 or len(password) < 8 or not firstname 
             or not lastname or not email or not username):
             return redirect(url_for("errors.bad_request"))
 
-        # check user
-        print("check user")
         user = User.query.filter_by(username=username).first()
-        print(user)
         if (user):
             return redirect(url_for("errors.bad_request"))
         
         # when passed all the validations, add user in the database
         user = User(username=username, email=email, firstname=firstname, lastname=lastname, access_level=int(access_level))
+        user.set_password(password)
         db.session.add(user)
         db.session.commit()
 
