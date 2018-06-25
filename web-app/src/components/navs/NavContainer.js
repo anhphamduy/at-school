@@ -1,15 +1,11 @@
 import React from "react";
 import { Layout } from "antd";
+import NavTeacher from "./Teacher/NavTeacher";
 
 export default class NavContainer extends React.Component {
   state = {
-    collapsed: true
-  };
-
-  _toggle = () => {
-    this.setState({
-      collapsed: !this.state.collapsed
-    });
+    collapsed: true,
+    disabledNavTeacher: true
   };
 
   render() {
@@ -17,10 +13,10 @@ export default class NavContainer extends React.Component {
       <Layout.Sider
         theme="light"
         onMouseOver={() => {
-          this.setState({ collapsed: false });
+          this.setState({ collapsed: false, disabledNavTeacher: false });
         }}
         onMouseLeave={() => {
-          this.setState({ collapsed: true });
+          this.setState({ collapsed: true, disabledNavTeacher: true });
         }}
         trigger={null}
         collapsible
@@ -33,7 +29,7 @@ export default class NavContainer extends React.Component {
           bottom: 0,
           top: 0,
           position: "fixed",
-          zIndex: 100,
+          zIndex: 100
         }}
       >
         {this.props.children}

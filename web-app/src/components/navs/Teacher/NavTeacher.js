@@ -6,9 +6,10 @@ import { logout } from "../../../api/auth";
 import "antd/dist/antd.css";
 import "./Navs.css";
 
-export default class NavNotLoggedIn extends React.Component {
+export default class NavTeacher extends React.Component {
   state = {
-    spinnerVisible: false
+    spinnerVisible: false,
+    menuDisabled: true
   };
 
   changeMenuSelection = menuKey => {
@@ -19,7 +20,7 @@ export default class NavNotLoggedIn extends React.Component {
         this.props.changeUserType({ userType: "anomynous" });
       });
     } else {
-      this.props.changeMenu(menuKey)
+      this.props.changeMenu(menuKey);
       this.setState({
         selectedKeys: [menuKey]
       });
@@ -28,11 +29,11 @@ export default class NavNotLoggedIn extends React.Component {
 
   render() {
     return (
-      <NavContainer changeLayoutMarginLeft={this.props.changeLayoutMarginLeft}>
+      <NavContainer>
         <SchoolLogo />
         <Menu
           theme="light"
-          mode="inline"
+          mode={this.state.menuDisabled ? "vertical" : "inline"}
           onClick={item => {
             this.changeMenuSelection(item.key);
           }}
@@ -50,6 +51,7 @@ export default class NavNotLoggedIn extends React.Component {
           />
           <Menu.SubMenu
             key="user"
+            className="UserAvatarNav"
             title={<UserAvatarNav userInfo={this.props.userInfo} />}
           >
             <Menu.Item key="1">
@@ -91,20 +93,25 @@ export default class NavNotLoggedIn extends React.Component {
   }
 }
 
+// please remove important from source code in order to make the style works padding: 0 32px !important in css dist antd;
 const UserAvatarNav = props => {
   return (
-    <div>
-      <Icon
-        style={{
-          alignItems: "center",
-          width: "32px",
-          marginLeft: "-8px",
-          height: "32px"
-        }}
+    <div
+      style={{
+        alignItems: "center"
+      }}
+    >
+      <Avatar
+        style={{ marginRight: "10px" }}
+        shape="square"
+        src={props.userInfo.avatarUrl}
+      />
+      <span
+        id="UserAvatarNavText"
+        style={{ fontSize: "14px", textTransform: "capitalize" }}
       >
-        <Avatar shape="square" src={props.userInfo.avatarUrl} />
-      </Icon>
-      <span>{props.userInfo.fullname}</span>
+        {props.userInfo.fullname}
+      </span>
     </div>
   );
 };

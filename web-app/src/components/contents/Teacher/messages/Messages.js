@@ -15,7 +15,7 @@ export default class Messages extends React.Component {
             position: "relative",
             marginTop: "5vh",
             marginLeft: "200px",
-            height: "94.99vh",
+            height: "95vh",
             borderRight: "1px rgb(232, 232, 232) solid"
           }}
         >
@@ -33,7 +33,7 @@ export default class Messages extends React.Component {
                 alignItems: "center",
                 flexDirection: "row",
                 paddingBottom: "5%",
-                borderBottom: "1px rgb(232, 232, 232) solid",
+                borderBottom: "1px rgb(232, 232, 232) solid"
               }}
             >
               <Avatar size="large" shape="circle" />

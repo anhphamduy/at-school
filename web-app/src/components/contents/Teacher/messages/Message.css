@@ -49,6 +49,10 @@
   background: rgba(0, 0, 0, 0.1);
 }
 
+.UserAvatarNav .ant-menu-submenu-title {
+  padding-left: 24px !important;
+}
+
 .message-container textarea {
   min-height: 100% !important;
   max-height: 100% !important;
@@ -66,6 +70,15 @@
   font-weight: 400;
   font-family: Helvetica Neue, Segoe UI, Helvetica, Arial, sans-serif;
   text-transform: capitalize;
+}
+
+.ant-menu-inline-collapsed #UserAvatarNavText {
+  visibility: hidden;
+  color: red;
+} 
+
+.ant-menu-submenu-vertical .ant-menu-inline {
+  position: fixed !important;
 }
 
 .chat {
