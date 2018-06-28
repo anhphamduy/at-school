@@ -85,7 +85,6 @@ class CurrentClassTable extends React.Component {
         address: "London No. 2 Lake Park"
       }
     ]
-    
   };
   onInputChange = e => {
     this.setState({ searchText: e.target.value });
@@ -185,6 +184,8 @@ class CurrentClassTable extends React.Component {
         onFilter: (value, record) => record.address.indexOf(value) === 0
       }
     ];
-    return <Table columns={columns} dataSource={this.state.data} size="small" />;
+    return (
+      <Table columns={columns} dataSource={this.state.data} size="small" />
+    );
   }
 }

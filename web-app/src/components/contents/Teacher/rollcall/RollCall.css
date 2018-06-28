@@ -1,29 +1,24 @@
 /* Pen-specific styles */
 
-.RollCall .left-half, .RollCall .right-half {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-
-.RollCall h1 {
-  font-size: 1.75rem;
-  margin: 0 0 0.75rem 0;
+.RollCall .left-half,
+.RollCall .right-half {
+  height: 100%;
+  width: 50%;
+  position: fixed;
+  z-index: 1;
+  top: 5vh;
+  overflow-x: hidden;
+  padding-top: 20px;
 }
 
 /* Pattern styles */
-.RollCall .container {
-  display: flex;
-}
 
 .RollCall .left-half {
-  flex: 1;
-  padding: 1rem;
+  left: 79px;
 }
 
 .RollCall .right-half {
-  flex: 1;
-  padding: 1rem;
+  right: 0;
 }
 
 .custom-filter-dropdown {
