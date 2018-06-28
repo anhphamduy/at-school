@@ -2,6 +2,7 @@ import React from "react";
 import { Menu, Layout } from "antd";
 import ContentContainer from "../ContentContainer";
 import Messages from "./messages/Messages";
+import RollCall from "./rollcall/RollCall"
 
 export default class ContentTeacher extends React.Component {
   render() {
@@ -14,7 +15,8 @@ export default class ContentTeacher extends React.Component {
       >
         <HorizontalNav mode={"Login"} />
         <ContentContainer noGrid={true}>
-          {this.props.currentMenu === "5" ? <Messages /> : "Fuck You"}
+          {this.props.currentMenu === "5" ? <Messages /> : null}
+          {this.props.currentMenu === "6" ? <RollCall /> : null}
         </ContentContainer>
       </Layout>
     );

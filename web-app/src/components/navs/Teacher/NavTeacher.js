@@ -13,7 +13,7 @@ export default class NavTeacher extends React.Component {
   };
 
   changeMenuSelection = menuKey => {
-    if (menuKey === "6") {
+    if (menuKey === "7") {
       this.props.changeLoading();
       logout(this.props.userInfo.token, () => {
         this.props.changeLoading();
@@ -84,6 +84,10 @@ export default class NavTeacher extends React.Component {
             <span>Messages</span>
           </Menu.Item>
           <Menu.Item key="6">
+            <Icon type="video-camera" />
+            <span>Roll Call</span>
+          </Menu.Item>
+          <Menu.Item key="7">
             <Icon type="logout" />
             <span>Log out</span>
           </Menu.Item>
