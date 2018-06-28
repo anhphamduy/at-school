@@ -39,8 +39,8 @@ export default class ListOfPeople extends React.Component {
             onFocus={this.handleSearchFocus}
             onChange={this.handleChangeSearch}
           />
-          {this.state.default ? <ListDefault /> : null}
-          {this.state.whenFocus ? <ListWhenFocus /> : null}
+          {this.state.default ? <ListDefault {...this.props} /> : null}
+          {this.state.whenFocus ? <ListWhenFocus {...this.props} /> : null}
         </Layout.Sider>
       </div>
     );
@@ -49,15 +49,30 @@ export default class ListOfPeople extends React.Component {
 
 class ListWhenFocus extends React.Component {
   state = {
-    finishedFetchTeachers: true,
-    finishedFetchStudents: true
+    teachers: {
+      onClick: false,
+      clickValue: ["1"]
+    },
+    students: {
+      onClick: false,
+      clickValue: ["1"]
+    }
   };
 
   fetchUser = async () => {
     fetch("https://randomuser.me/api/?results=20")
       .then(res => res.json())
       .then(res => {
-        this.setState({ students: res.results, teachers: res.results });
+        this.setState({
+          teachers: {
+            ...this.state.teachers,
+            teacherData: res.results
+          },
+          students: {
+            ...this.state.students,
+            studentData: res.results
+          }
+        });
       });
   };
 
@@ -69,11 +84,38 @@ class ListWhenFocus extends React.Component {
     return (
       <div>
         <div className="ListWhenFocus-title">Teachers</div>
-        {!this.state.teachers ? (
+        {!this.state.teachers.teacherData ? (
           <MessageSpinner />
         ) : (
-          <Menu theme="light" mode="inline">
-            {this.state.teachers.map((teacher, index) => (
+          <Menu
+            selectedKeys={this.state.teachers.clickValue}
+            theme="light"
+            mode="inline"
+            onClick={key => {
+              // if the teachers are not onclicked, then set the menu of students to a random number
+              // after set the key for teachers
+              if (!this.state.teachers.onClick) {
+                this.setState({
+                  students: {
+                    ...this.state.students,
+                    clickValue: ["-1"],
+                    onClick: false
+                  }
+                });
+              }
+              this.setState({
+                teachers: {
+                  ...this.state.teachers,
+                  clickValue: [key.key],
+                  onClick: true
+                }
+              });
+              this.props.getPersonInfo(
+                this.state.teachers.teacherData[Number.parseInt(key.key)]
+              );
+            }}
+          >
+            {this.state.teachers.teacherData.map((teacher, index) => (
               <Menu.Item key={index}>
                 <Person
                   src={teacher.picture.medium}
@@ -84,12 +126,41 @@ class ListWhenFocus extends React.Component {
           </Menu>
         )}
         <div className="ListWhenFocus-title">Students</div>
-        {!this.state.students ? (
+        {!this.state.students.studentData ? (
           <MessageSpinner />
         ) : (
-          <Menu theme="light" mode="inline">
-            {this.state.students.map((student, index) => (
-              <Menu.Item key={index}>
+          <Menu
+            selectedKeys={this.state.students.clickValue}
+            onClick={key => {
+              // if the teachers are not onclicked, then set the menu of students to a random number
+              // after set the key for teachers
+              if (!this.state.students.onClick) {
+                this.setState({
+                  teachers: {
+                    ...this.state.teachers,
+                    clickValue: ["-1"],
+                    onClick: false
+                  }
+                });
+              }
+              this.setState({
+                students: {
+                  ...this.state.students,
+                  clickValue: [key.key],
+                  onClick: true
+                }
+              });
+              this.props.getPersonInfo(
+                this.state.students.studentData[Number.parseInt(key.key)]
+              );
+            }}
+            theme="light"
+            mode="inline"
+          >
+            {this.state.students.studentData.map((student, index) => (
+              <Menu.Item
+                key={index}
+              >
                 <Person
                   src={student.picture.medium}
                   fullname={`${student.name.first} ${student.name.last}`}
@@ -132,7 +203,6 @@ const Person = props => {
         shape="circle"
         style={{ marginRight: "10px" }}
       />
-
       <span className="nav-text">{props.fullname}</span>
     </div>
   );

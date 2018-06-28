@@ -1,6 +1,5 @@
 import React from "react";
 import { Layout } from "antd";
-import NavTeacher from "./Teacher/NavTeacher";
 
 export default class NavContainer extends React.Component {
   state = {

@@ -95,9 +95,28 @@ export default class ChatBox extends React.Component {
 
   render() {
     return (
-      <div style={{height: "100%", width: "100%", display: "flex", flexDirection: "column"}}>
-        <div className="chat-name">Hello</div>
-        <div className="chatbox" style={{ display: "flex", flexDirection: "column", width: "100%", flex: 1}}>
+      <div
+        style={{
+          height: "100%",
+          width: "100%",
+          display: "flex",
+          flexDirection: "column"
+        }}
+      >
+        <div className="chat-name">
+          {this.props.personInfo
+            ? this.props.personInfo.name.first + this.props.personInfo.name.last
+            : "hello"}
+        </div>
+        <div
+          className="chatbox"
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            width: "100%",
+            flex: 1
+          }}
+        >
           <div className="chatlogs friend">
             {this.state.messages.map((message, key) => (
               <ChatMessage key={key} {...message} />
@@ -126,7 +145,7 @@ class ChatInput extends React.Component {
 
   render() {
     return (
-      <div style={{ flex: "1",}}>
+      <div style={{ flex: "1" }}>
         <div
           style={{
             flexDirection: "row",

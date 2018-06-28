@@ -33,7 +33,7 @@ export default class NavTeacher extends React.Component {
         <SchoolLogo />
         <Menu
           theme="light"
-          mode={this.state.menuDisabled ? "vertical" : "inline"}
+          mode="inline"
           onClick={item => {
             this.changeMenuSelection(item.key);
           }}

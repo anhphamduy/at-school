@@ -6,10 +6,16 @@ import ChatBox from "./chatUI/ChatBox";
 import "./Message.css";
 
 export default class Messages extends React.Component {
+  state = {};
+
+  getPersonInfo = personInfo => {
+    this.setState({ personInfo });
+  };
+
   render() {
     return (
       <Layout theme="light" style={{ backgroundColor: "white" }}>
-        <ListOfPeople />
+        <ListOfPeople getPersonInfo={this.getPersonInfo} />
         <Layout.Content
           style={{
             position: "relative",
@@ -19,7 +25,7 @@ export default class Messages extends React.Component {
             borderRight: "1px rgb(232, 232, 232) solid"
           }}
         >
-          <ChatBox />
+          <ChatBox personInfo={this.state.personInfo} />
         </Layout.Content>
         <Layout.Sider
           className="bigSideBar"
