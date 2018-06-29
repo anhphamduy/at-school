@@ -28,6 +28,7 @@ class User(db.Model):
     num_of_logins = db.Column(db.Integer, default=0)
     nfc_id = db.Column(db.String(30))
     school_id = db.Column(db.Integer)
+    face_encoding = db.Column(db.String(2000))
 
     # messages
     sending_to = db.relationship(

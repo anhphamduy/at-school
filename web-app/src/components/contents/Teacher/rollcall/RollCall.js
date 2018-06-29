@@ -1,6 +1,7 @@
 import React from "react";
 import Webcam from "react-webcam";
 import "./RollCall.css";
+import { uploadImage } from "../../../../api/camera";
 
 import { Table, Input, Button, Icon } from "antd";
 
@@ -19,10 +20,54 @@ export default class RollCall extends React.Component {
             </article>
           </div>
           <div className="right-half">
-            <Webcam />
+            <Camera />
             <CurrentClassTable />
           </div>
         </section>
+      </div>
+    );
+  }
+}
+
+class Camera extends React.Component {
+
+  state = {
+    sendImage: null,
+  }
+
+  setRef = webcam => {
+    this.webcam = webcam;
+  };
+
+  capture = () => {
+    const imageSrc = this.webcam.getScreenshot();
+    return imageSrc;
+  };
+
+  upload() {
+    const imageSrc = this.webcam.getScreenshot();
+    if (imageSrc !== null)
+      uploadImage(imageSrc);
+  }
+
+  componentDidMount() {
+    let sendImage = setInterval(() => this.upload(), 500)
+    this.setState({sendImage})
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.state.sendImage)
+  }
+
+  render() {
+    return (
+      <div>
+        <Webcam
+          audio={false}
+          ref={this.setRef}
+          width="100%"
+          screenshotFormat="image/jpeg"
+        />
       </div>
     );
   }

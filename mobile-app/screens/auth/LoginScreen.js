@@ -3,7 +3,6 @@ import {
   Button,
   View,
   StyleSheet,
-  Text,
   TextInput,
   Image,
   Dimensions,
@@ -24,17 +23,13 @@ export default class LoginScreen extends React.Component {
   _login = async () => {
     this.setState({ spinnerVisible: true });
     try {
-      const {token} = await login(this.state.username, this.state.password)
-      console.log(this.props)
-      this.props.navigation.setParams({ token: token })
-      console.log(this.props.navigation.params)
-
-      
-      
+      // const {token} = await login(this.state.username, this.state.password)
+      // this.props.navigation.setParams({ token: token })
 
       // try logging in
       this.setState({ spinnerVisible: false });
-      this.props.navigation.navigate("Teacher");
+      this.props.navigation.navigate("Student");
+      // this.props.navigation.navigate("Teacher");
     } catch (err) {
       // if can't log in, print out errors
       this.setState({ err: err.message });

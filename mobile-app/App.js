@@ -1,5 +1,4 @@
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
 import {
   createStackNavigator,
   createSwitchNavigator,
@@ -12,8 +11,12 @@ import {
   TeacherAccountSettingsScreen,
   TeacherNotificationSettingsScreen,
   TeacherMessageScreen,
-  TeacherDetailsMessageScreen,
+  TeacherDetailsMessageScreen
 } from "./screens/teacher/Screens";
+import {
+  StudentOverviewScreen,
+  StudentCameraScreen
+} from "./screens/student/Screens";
 import Ionicons from "react-native-vector-icons/Ionicons";
 
 const TeacherSettingsStack = createStackNavigator(
@@ -34,7 +37,7 @@ const TeacherSettingsStack = createStackNavigator(
 const TeacherMessagingStack = createStackNavigator(
   {
     TeacherMessage: TeacherMessageScreen,
-    TeacherDetailsMessage: TeacherDetailsMessageScreen,
+    TeacherDetailsMessage: TeacherDetailsMessageScreen
   },
   {
     initialRouteName: "TeacherMessage",
@@ -74,9 +77,38 @@ const TeacherScreen = createBottomTabNavigator(
   }
 );
 
+const StudentScreen = createBottomTabNavigator(
+  {
+    Overview: StudentOverviewScreen,
+    Camera: StudentCameraScreen
+  },
+  {
+    navigationOptions: ({ navigation }) => ({
+      tabBarIcon: ({ focused, tintColor }) => {
+        const { routeName } = navigation.state;
+        let iconName;
+        if (routeName === "Overview") {
+          iconName = `ios-document${focused ? "" : "-outline"}`;
+        } else if (routeName === "Camera") {
+          iconName = `ios-camera${focused ? "" : "-outline"}`;
+        } else if (routeName === "Message") {
+          iconName = `ios-text${focused ? "" : "-outline"}`;
+        }
+
+        return <Ionicons name={iconName} size={30} color={tintColor} />;
+      }
+    }),
+    tabBarOptions: {
+      activeTintColor: "orange",
+      inactiveTintColor: "gray"
+    }
+  }
+);
+
 const AppNavigator = createSwitchNavigator({
   Login: LoginScreen,
-  Teacher: TeacherScreen
+  Teacher: TeacherScreen,
+  Student: StudentScreen,
 });
 
 export default class App extends React.Component {
