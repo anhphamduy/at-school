@@ -1,8 +1,7 @@
 import React from "react";
 import { View, TouchableOpacity, Text } from "react-native";
-import { Camera, Permissions } from "expo";
+import { Camera, Permissions, ImageManipulator } from "expo";
 import Loader from "../../../components/Loader";
-import uploadImage from "../../../api/camera"
 
 export class StudentCameraScreen extends React.Component {
   render() {
@@ -14,7 +13,7 @@ export default class CameraComponent extends React.Component {
   state = {
     hasCameraPermission: null,
     type: Camera.Constants.Type.back,
-    spinnerVisible: false,
+    spinnerVisible: false
   };
 
   async componentWillMount() {
@@ -24,15 +23,26 @@ export default class CameraComponent extends React.Component {
 
   takePicture = async () => {
     if (this.camera) {
-      let photo = await this.camera.takePictureAsync({ base64: true });
-      const base64Data = await photo.base64
-      uploadImage(base64Data)
+      this.setState({spinnerVisible: true})
+      let photo = await this.camera.takePictureAsync({ base64: false });
+      const photoRotate = await ImageManipulator.manipulate(
+        photo.uri,
+        [{ resize: { width: 720, height: 1040 } }, { rotate: 0 }],
+        { base64: true }
+      );
+      const base64Data = await photoRotate.base64;
+      const response = await fetch("http://192.168.1.13:5000/camera/save", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({ imageData: base64Data })
+      }).then(res => {
+        console.log(res)
+        this.setState({spinnerVisible: false})
+      })
     }
   };
 
-  uploadPicture = async () => {
-
-  }
+  uploadPicture = async () => {};
 
   render() {
     const { hasCameraPermission } = this.state;

@@ -1,13 +1,18 @@
 from flask import request, jsonify, current_app, redirect, url_for
+import os
 from app.controllers.camera import bp
-import io, base64
+import base64
 import face_recognition
+from PIL import Image
+
+
 
 @bp.route("/camera/upload", methods=["POST"])
 def upload():
     try:
         data = request.get_json()
         image_data = data["imageData"]
+        print(image_data[0:50])
         image_data = image_data[image_data.find(",")+1:]
         image_data = base64.b64decode(image_data)
         filename = 'image.jpg'
@@ -44,6 +49,8 @@ def upload():
 
         # Load the uploaded image file
         img = face_recognition.load_image_file(filename)
+        face_locations = face_recognition.face_locations(img)
+        print(face_locations)
         # Get face encodings for any faces in the uploaded image
         unknown_face_encodings = face_recognition.face_encodings(img)
 
@@ -68,15 +75,16 @@ def save_image():
         data = request.get_json()
         image_data = data["imageData"]
         image_data = base64.b64decode(image_data)
-        filename = 'image.jpg'
+        filename = os.path.join(os.path.dirname(__file__), 'image.jpg')
         with open(filename, 'wb') as f:
             f.write(image_data)
-        image = face_recognition.load_image_file("image.jpg")
-        face_locations = face_recognition.face_locations(image)
+            print("save successful")
+        img = face_recognition.load_image_file(filename)
+        face_locations = face_recognition.face_locations(img)
         if len(face_locations) == 0:
-            print("No face found")
-        else:
-            print("Face found")
+            return redirect(url_for("errors.bad_request"))
+        # put face encoding of the user into the database here
+        
         return jsonify({"success" : True})
     except KeyError:
         return redirect(url_for("errors.bad_request"))
