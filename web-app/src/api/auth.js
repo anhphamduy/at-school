@@ -4,13 +4,12 @@ export const login = async (username, password, callback = () => {}) => {
     headers: { "content-type": "application/json" },
     body: JSON.stringify({ username, password })
   });
-  const data = await response.json();
-  if (data.success) {
+  if (response.ok) {
     callback();
-    return data;
+    return response.json();
   }
 
-  const errMessage = await data.message;
+  const errMessage = await response.text();
   throw new Error(errMessage);
 };
 

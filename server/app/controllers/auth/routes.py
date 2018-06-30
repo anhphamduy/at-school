@@ -13,6 +13,8 @@ def signin():
         username = data["username"]
         password = data["password"]
         user = User.query.filter_by(username=username).first()
+        if not user:
+            return bad_request("Incorrect username or password.")
         if user and user.check_password(password):
             public_key = open(current_app.config["JWT_KEY_PUBLIC"]).read()
             private_key = open(current_app.config["JWT_KEY_PRIVATE"]).read()
@@ -31,7 +33,7 @@ def signin():
                 })
     except KeyError:
         return bad_request("Wrong arguments.")
-    return bad_request("Username or password is not correct.")
+    return bad_request("There is an internal server error. Please contact the IT support.")
 
 
 @bp.route("/auth/signout", methods=["POST"])

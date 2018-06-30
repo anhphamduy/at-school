@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { CSSTransition } from "react-transition-group";
 import AppNotLoggedIn from "./components/AppNotLoggedIn";
 import AppTeacher from "./components/AppTeacher";
 import Spinner from "./components/Spinner";
@@ -40,7 +39,7 @@ class App extends Component {
           changeLoading={this.changeLoading}
         />
         <TeacherComponent
-          in={this.state.userInfo.userType === "teacher"}
+          in={this.state.userInfo.userType === 2}
           changeLoading={this.changeLoading}
           changeUserType={this.changeUserType}
           userInfo={this.state.userInfo}

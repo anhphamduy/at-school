@@ -49,6 +49,11 @@ class User(db.Model):
         """Checks a password against the hash."""
         return check_password_hash(self.password, password)
 
+    def save_face_encoding(self, encoding):
+        self.face_encoding = encoding
+        db.session.add(self)
+        db.session.commit()
+
     def login(self, jwt):
         if self.jwt:  
             self.num_of_logins += 1

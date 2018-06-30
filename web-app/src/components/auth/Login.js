@@ -24,7 +24,9 @@ class NormalLoginForm extends React.Component {
         this.props.changeUserType(data)
       }
     } catch (error) {
-      console.log(error);
+      const message = JSON.parse(error.message)
+      console.log(message.message);
+      this.props.changeLoading()
     }
   };
 

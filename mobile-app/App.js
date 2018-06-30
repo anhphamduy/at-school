@@ -50,9 +50,9 @@ const TeacherMessagingStack = createStackNavigator(
 
 const TeacherScreen = createBottomTabNavigator(
   {
-    Overview: TeacherOverviewScreen,
-    Message: TeacherMessagingStack,
-    Settings: TeacherSettingsStack
+    TeacherOverview: TeacherOverviewScreen,
+    TeacherMessage: TeacherMessagingStack,
+    TeacherSettings: TeacherSettingsStack
   },
   {
     navigationOptions: ({ navigation }) => ({
@@ -79,8 +79,8 @@ const TeacherScreen = createBottomTabNavigator(
 
 const StudentScreen = createBottomTabNavigator(
   {
-    Overview: StudentOverviewScreen,
-    Camera: StudentCameraScreen
+    StudentOverview: props => <StudentOverviewScreen {...props}/>,
+    StudentCamera: props => <StudentCameraScreen {...props}/>
   },
   {
     navigationOptions: ({ navigation }) => ({
@@ -112,12 +112,28 @@ const AppNavigator = createSwitchNavigator({
 });
 
 export default class App extends React.Component {
+
+  state = {
+    token: null,
+  }
+
+  handleLogin = (token) => {
+    this.setState({token})
+  }
+
+  handleLogout = () => {
+    this.setState({
+      token: null,
+    });
+  }
+
   render() {
     return (
       <AppNavigator
         screenProps={
           {
-            // put in global props here
+            ...this.state,
+            handleLogin: this.handleLogin,
           }
         }
       />

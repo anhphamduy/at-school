@@ -23,15 +23,19 @@ export default class LoginScreen extends React.Component {
   _login = async () => {
     this.setState({ spinnerVisible: true });
     try {
-      // const {token} = await login(this.state.username, this.state.password)
-      // this.props.navigation.setParams({ token: token })
-
-      // try logging in
+      const { token, userType } = await login(
+        this.state.username,
+        this.state.password
+      );
+      this.props.screenProps.handleLogin(token);
       this.setState({ spinnerVisible: false });
-      this.props.navigation.navigate("Student");
-      // this.props.navigation.navigate("Teacher");
+
+      if (userType === 1) {
+        this.props.navigation.navigate("Student");
+      } else if (userType === 2) {
+        this.props.navigation.navigate("Teacher");
+      }
     } catch (err) {
-      // if can't log in, print out errors
       this.setState({ err: err.message });
       this.setState({ spinnerVisible: false });
     }

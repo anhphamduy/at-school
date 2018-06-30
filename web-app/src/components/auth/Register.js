@@ -19,7 +19,7 @@ class RegistrationForm extends React.Component {
   };
   handleSubmit = e => {
     e.preventDefault();
-    this.props.changeLoading()
+    this.props.changeLoading();
     this.props.form.validateFieldsAndScroll((err, values) => {
       if (!values.username) {
         this.setState({
@@ -40,10 +40,16 @@ class RegistrationForm extends React.Component {
       }
 
       if (!err) {
-        register(values, () => {
-          this.props.changeMode("login");
-          this.props.changeLoading()
-        });
+        try {
+          register(values, () => {
+            this.props.changeMode("login");
+            this.props.changeLoading();
+          });
+        } catch (err) {
+          const message = JSON.parse(err.message);
+          console.log(message.message);
+          this.props.changeLoading();
+        }
       }
     });
   };
