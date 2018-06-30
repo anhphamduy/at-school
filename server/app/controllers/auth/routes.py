@@ -3,6 +3,7 @@ from flask import request, jsonify, current_app, redirect, url_for
 from app.controllers.auth import bp
 from app.models import User
 from app import db
+from app.controllers.errors import bad_request
 
 
 @bp.route("/auth/signin", methods=["POST"])
@@ -25,12 +26,12 @@ def signin():
                 "token": token, 
                 "success": True, 
                 "avatarUrl": user.get_default_avatar(256), 
-                "userType": "teacher",
+                "userType": user.access_level,
                 "fullname": fullname
                 })
     except KeyError:
-        return redirect(url_for("errors.bad_request"))
-    return jsonify({"success": False, "message": "Username or password is not correct."})
+        return bad_request("Wrong arguments.")
+    return bad_request("Username or password is not correct.")
 
 
 @bp.route("/auth/signout", methods=["POST"])
@@ -43,8 +44,8 @@ def signout():
         user.logout()
         return jsonify({"success": True})
     except KeyError:
-        return redirect(url_for("errors.bad_request"))
-    return redirect(url_for("errors.bad_request"))
+        return bad_request("Wrong arguments.")
+    return bad_request("There is an internal server error. Please contact the IT support.")
 
 @bp.route("/auth/register", methods=["POST"])
 def register():
@@ -59,15 +60,15 @@ def register():
         access_level = data["accessLevel"]
 
         if access_level not in ["1", "2", 1, 2]:
-            return redirect(url_for("errors.bad_request"))
+            return bad_request("Type is not correct.")
 
         if (password != password1 or len(password) < 8 or not firstname 
             or not lastname or not email or not username):
-            return redirect(url_for("errors.bad_request"))
+            return bad_request("Please check in with all the fields.")
 
         user = User.query.filter_by(username=username).first()
         if (user):
-            return redirect(url_for("errors.bad_request"))
+            return bad_request("Username already exists.")
         
         # when passed all the validations, add user in the database
         user = User(username=username, email=email, firstname=firstname, lastname=lastname, access_level=int(access_level))
@@ -78,8 +79,8 @@ def register():
         return jsonify({"success": True})
 
     except KeyError: 
-        return redirect(url_for("errors.bad_request"))
-    return redirect(url_for("errors.bad_request"))
+        return bad_request("Wrong arguments.")
+    return bad_request("There is an internal server error. Please contact the IT support.")
 
 
 @bp.route("/auth/duplicateuser", methods=["POST"])
@@ -95,5 +96,5 @@ def duplicate_user():
 
         return jsonify({"duplicate": False})
     except KeyError:
-        return redirect(url_for("errors.bad_request"))
-    return redirect(url_for("errors.bad_request"))
+        return bad_request("Wrong arguments.")
+    return bad_request("There is an internal server error. Please contact the IT support.")

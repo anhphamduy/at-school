@@ -4,6 +4,8 @@ from app.controllers.camera import bp
 import base64
 import face_recognition
 from PIL import Image
+import numpy as np
+from app.controllers.errors import bad_request
 
 
 
@@ -50,7 +52,6 @@ def upload():
         # Load the uploaded image file
         img = face_recognition.load_image_file(filename)
         face_locations = face_recognition.face_locations(img)
-        print(face_locations)
         # Get face encodings for any faces in the uploaded image
         unknown_face_encodings = face_recognition.face_encodings(img)
 
@@ -66,8 +67,8 @@ def upload():
 
         return jsonify({"success" : True, "face_found_in_image": face_found, "is_picture_of_obama": is_obama})
     except KeyError:
-        return redirect(url_for("errors.bad_request"))
-    return jsonify({"success": False, "message": "Username or password is not correct."})
+        return bad_request("Wrong arguments.")
+    return bad_request("There is an internal server error. Please contact the IT support.")
 
 @bp.route("/camera/save", methods=["POST"])
 def save_image():
@@ -80,15 +81,17 @@ def save_image():
             f.write(image_data)
             print("save successful")
         img = face_recognition.load_image_file(filename)
-        face_locations = face_recognition.face_locations(img)
-        if len(face_locations) == 0:
-            return redirect(url_for("errors.bad_request"))
+        face_encodings = face_recognition.face_encodings(img)
+        if len(face_encodings) != 1:
+            return bad_request("There is no face in the photo.")
         # put face encoding of the user into the database here
+        
+        encoding_to_save = face_encodings[0].tostring()
         
         return jsonify({"success" : True})
     except KeyError:
-        return redirect(url_for("errors.bad_request"))
-    return jsonify({"success": False, "message": "Username or password is not correct."})
+        return bad_request("Wrong arguments.")
+    return bad_request("There is an internal server error. Please contact the IT support.")
 
 
 
