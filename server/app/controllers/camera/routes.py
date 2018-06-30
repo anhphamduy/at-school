@@ -67,11 +67,16 @@ def save_image():
     try: 
         data = request.get_json()
         image_data = data["imageData"]
-        print(image_data)
         image_data = base64.b64decode(image_data)
         filename = 'image.jpg'
         with open(filename, 'wb') as f:
             f.write(image_data)
+        image = face_recognition.load_image_file("image.jpg")
+        face_locations = face_recognition.face_locations(image)
+        if len(face_locations) == 0:
+            print("No face found")
+        else:
+            print("Face found")
         return jsonify({"success" : True})
     except KeyError:
         return redirect(url_for("errors.bad_request"))
