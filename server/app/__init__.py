@@ -28,6 +28,9 @@ def create_app(config_class=Config):
     from app.controllers.camera import bp as camera_bp
     app.register_blueprint(camera_bp)
 
+    from app.controllers.messaging import bp as messaging_bp
+    app.register_blueprint(messaging_bp)
+
     from app.controllers.errors import bp as errors_bp
     app.register_blueprint(errors_bp)
     

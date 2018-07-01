@@ -25,7 +25,7 @@ export default class AppTeacher extends React.Component {
         <NavTeacher changeLayoutMarginLeft={this.changeLayoutMarginLeft} changeMenu={this.changeMenu} {...this.props} />
         <Layout>
           <ContentTeacher
-            
+            {...this.props}
             layoutMarginLeft={this.state.layoutMarginLeft}
             currentMenu={this.state.currentMenu}
           />

@@ -87,6 +87,10 @@ export default class ChatBox extends React.Component {
     this.scrollToBottom();
   }
 
+  componentWillUpdate() {
+    console.log(this.props)
+  }
+
   componentDidUpdate() {
     this.scrollToBottom();
   }
@@ -105,7 +109,7 @@ export default class ChatBox extends React.Component {
       >
         <div className="chat-name">
           {this.props.personInfo
-            ? this.props.personInfo.name.first + this.props.personInfo.name.last
+            ? this.props.personInfo.fullname
             : "hello"}
         </div>
         <div

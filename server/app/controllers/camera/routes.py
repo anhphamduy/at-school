@@ -56,6 +56,7 @@ def upload():
 def save_image():
     try: 
         data = request.get_json()
+        
         # get user from jwt token
         token = data["token"]
         payload = jwt.decode(token, open(current_app.config["JWT_KEY_PUBLIC"]).read(), algorithms=['RS256'])

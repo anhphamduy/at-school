@@ -15,8 +15,8 @@ export default class ContentTeacher extends React.Component {
       >
         <HorizontalNav mode={"Login"} />
         <ContentContainer noGrid={true}>
-          {this.props.currentMenu === "5" ? <Messages /> : null}
-          {this.props.currentMenu === "6" ? <RollCall /> : null}
+          {this.props.currentMenu === "5" ? <Messages {...this.props} /> : null}
+          {this.props.currentMenu === "6" ? <RollCall {...this.props} /> : null}
         </ContentContainer>
       </Layout>
     );

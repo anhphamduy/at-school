@@ -1,5 +1,6 @@
 import React from "react";
 import { Menu, Avatar, Layout, Input, Spin } from "antd";
+import { getMessage } from "../../../../api/message";
 
 export default class ListOfPeople extends React.Component {
   state = {
@@ -51,11 +52,11 @@ class ListWhenFocus extends React.Component {
   state = {
     teachers: {
       onClick: false,
-      clickValue: ["1"]
+      clickValue: ["0"]
     },
     students: {
       onClick: false,
-      clickValue: ["1"]
+      clickValue: ["0"]
     }
   };
 
@@ -110,9 +111,11 @@ class ListWhenFocus extends React.Component {
                   onClick: true
                 }
               });
-              this.props.getPersonInfo(
-                this.state.teachers.teacherData[Number.parseInt(key.key)]
-              );
+              const user = this.state.students.studentData[
+                Number.parseInt(key.key)
+              ];
+              const fullname = user.name.first + " " + user.name.last;
+              this.props.getPersonInfo({ fullname });
             }}
           >
             {this.state.teachers.teacherData.map((teacher, index) => (
@@ -150,17 +153,17 @@ class ListWhenFocus extends React.Component {
                   onClick: true
                 }
               });
-              this.props.getPersonInfo(
-                this.state.students.studentData[Number.parseInt(key.key)]
-              );
+              const user = this.state.students.studentData[
+                Number.parseInt(key.key)
+              ];
+              const fullname = user.name.first + " " + user.name.last;
+              this.props.getPersonInfo({ fullname: fullname });
             }}
             theme="light"
             mode="inline"
           >
             {this.state.students.studentData.map((student, index) => (
-              <Menu.Item
-                key={index}
-              >
+              <Menu.Item key={index}>
                 <Person
                   src={student.picture.medium}
                   fullname={`${student.name.first} ${student.name.last}`}
@@ -182,18 +185,67 @@ const MessageSpinner = () => {
   );
 };
 
-const ListDefault = props => {
-  return (
-    <Menu theme="light" mode="inline" defaultSelectedKeys={["1"]}>
-      <Menu.Item key={1}>
-        <Person fullname="Hello" />
-      </Menu.Item>
-      <Menu.Item key={2}>
-        <Person fullname="Hello" />
-      </Menu.Item>
-    </Menu>
-  );
-};
+class ListDefault extends React.Component {
+  state = {
+    users: null
+  };
+
+  componentWillMount() {
+    this.fetchUsers();
+  }
+
+  fetchUsers = async () => {
+    try {
+      const users = await getMessage(1, this.props.userInfo.token);
+      this.setState({ users: users.results });
+      console.log(users);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  fetchUser = async () => {
+    fetch("http://localhost:5000/getmessage")
+      .then(res => res.json())
+      .then(res => {
+        this.setState({
+          teachers: {
+            ...this.state.teachers,
+            teacherData: res.results
+          },
+          students: {
+            ...this.state.students,
+            studentData: res.results
+          }
+        });
+      });
+  };
+
+  render() {
+    if (this.state.users) {
+      return (
+        <Menu
+          theme="light"
+          mode="inline"
+          defaultSelectedKeys={["0"]}
+          onClick={key => {
+            this.props.getPersonInfo(this.state.users[Number.parseInt(key.key)])
+          }}
+        >
+          {this.state.users.map((user, index) => {
+            return (
+              <Menu.Item key={index}>
+                <Person fullname={user.fullname} src={user.avatar} />
+              </Menu.Item>
+            );
+          })}
+        </Menu>
+      );
+    } else {
+      return <MessageSpinner />;
+    }
+  }
+}
 
 const Person = props => {
   return (

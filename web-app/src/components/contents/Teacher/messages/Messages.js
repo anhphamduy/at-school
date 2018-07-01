@@ -15,7 +15,7 @@ export default class Messages extends React.Component {
   render() {
     return (
       <Layout theme="light" style={{ backgroundColor: "white" }}>
-        <ListOfPeople getPersonInfo={this.getPersonInfo} />
+        <ListOfPeople {...this.props} getPersonInfo={this.getPersonInfo} />
         <Layout.Content
           style={{
             position: "relative",
