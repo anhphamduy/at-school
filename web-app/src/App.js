@@ -35,35 +35,22 @@ class App extends Component {
       <div>
         <Spinner loading={this.state.loading} />
         <BrowserRouter>
-          {/* <Spinner loading={this.state.loading} /> */}
-          {/* <AnomynousComponent
-          in={this.state.userInfo.userType === "anomynous"}
-          changeUserType={this.changeUserType}
-          changeLoading={this.changeLoading}
-        />
-        <TeacherComponent
-          in={this.state.userInfo.userType === 2}
-          changeLoading={this.changeLoading}
-          changeUserType={this.changeUserType}
-          userInfo={this.state.userInfo}
-        /> */}
           <div>
             <Route
               exact
               path="/"
               component={() => (
-                <AnomynousComponent
+                <AppNotLoggedIn
                   changeUserType={this.changeUserType}
                   changeLoading={this.changeLoading}
                 />
               )}
             />
             <Route
-              exact
               path="/teacher"
               component={() =>
                 this.state.userInfo.userType === 2 ? (
-                  <TeacherComponent
+                  <AppTeacher
                     changeLoading={this.changeLoading}
                     changeUserType={this.changeUserType}
                     userInfo={this.state.userInfo}
@@ -73,6 +60,7 @@ class App extends Component {
                 )
               }
             />
+
             <Route
               exact
               path="/student"
@@ -94,14 +82,6 @@ class App extends Component {
     );
   }
 }
-
-const AnomynousComponent = props => {
-  return <AppNotLoggedIn {...props} />;
-};
-
-const TeacherComponent = props => {
-  return <AppTeacher {...props} />;
-};
 
 const StudentComponent = props => {
   return <h1>Student coming soon!</h1>;

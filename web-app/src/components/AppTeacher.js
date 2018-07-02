@@ -1,36 +1,24 @@
 import React from "react";
 import { Layout } from "antd";
 import NavTeacher from "./navs/Teacher/NavTeacher";
-import ContentTeacher from "./contents/Teacher/ContentTeacher";
+import { Route } from "react-router-dom";
+import TeacherDashboardScreen from "./contents/Teacher/TeacherDashboardScreen";
+import TeacherMessageScreen from "./contents/Teacher/TeacherMessageScreen";
 
-export default class AppTeacher extends React.Component {
-  state = {
-    currentMenu: "4",
-    layoutMarginLeft: 80
-  };
+const AppTeacher = props => (
+  <div>
+    <Layout style={{ minHeight: "100%" }}>
+      <NavTeacher {...props} />
+      <Route
+        path={`/teacher/dashboard`}
+        component={() => <TeacherDashboardScreen {...props} />}
+      />
+      <Route
+        path={`/teacher/message`}
+        component={() => <TeacherMessageScreen {...props} />}
+      />
+    </Layout>
+  </div>
+);
 
-  changeLayoutMarginLeft = value => {
-    this.setState({
-      layoutMarginLeft: value
-    });
-  };
-
-  changeMenu = currentMenu => {
-    this.setState({ currentMenu });
-  };
-
-  render() {
-    return (
-      <Layout style={{ minHeight: "100%" }}>
-        <NavTeacher changeLayoutMarginLeft={this.changeLayoutMarginLeft} changeMenu={this.changeMenu} {...this.props} />
-        <Layout>
-          <ContentTeacher
-            {...this.props}
-            layoutMarginLeft={this.state.layoutMarginLeft}
-            currentMenu={this.state.currentMenu}
-          />
-        </Layout>
-      </Layout>
-    );
-  }
-}
+export default AppTeacher;

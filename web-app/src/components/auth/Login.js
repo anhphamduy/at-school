@@ -27,7 +27,7 @@ class NormalLoginForm extends React.Component {
         if (data.userType === 1) {
           this.props.history.push('/student')
         } else {
-          this.props.history.push('/teacher')
+          this.props.history.push('/teacher/dashboard')
         }
       }
     } catch (error) {
