@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { BrowserRouter, Route, Redirect } from "react-router-dom";
 import AppNotLoggedIn from "./components/AppNotLoggedIn";
 import AppTeacher from "./components/AppTeacher";
 import Spinner from "./components/Spinner";
@@ -14,7 +15,7 @@ class App extends Component {
     },
     userInfo: {
       userType: "anomynous"
-    },
+    }
   };
 
   changeUserType = userInfo => {
@@ -33,7 +34,9 @@ class App extends Component {
     return (
       <div>
         <Spinner loading={this.state.loading} />
-        <AnomynousComponent
+        <BrowserRouter>
+          {/* <Spinner loading={this.state.loading} /> */}
+          {/* <AnomynousComponent
           in={this.state.userInfo.userType === "anomynous"}
           changeUserType={this.changeUserType}
           changeLoading={this.changeLoading}
@@ -43,21 +46,65 @@ class App extends Component {
           changeLoading={this.changeLoading}
           changeUserType={this.changeUserType}
           userInfo={this.state.userInfo}
-        />
+        /> */}
+          <div>
+            <Route
+              exact
+              path="/"
+              component={() => (
+                <AnomynousComponent
+                  changeUserType={this.changeUserType}
+                  changeLoading={this.changeLoading}
+                />
+              )}
+            />
+            <Route
+              exact
+              path="/teacher"
+              component={() =>
+                this.state.userInfo.userType === 2 ? (
+                  <TeacherComponent
+                    changeLoading={this.changeLoading}
+                    changeUserType={this.changeUserType}
+                    userInfo={this.state.userInfo}
+                  />
+                ) : (
+                  <Redirect to="/" />
+                )
+              }
+            />
+            <Route
+              exact
+              path="/student"
+              component={() =>
+                this.state.userInfo.userType === 1 ? (
+                  <StudentComponent
+                    changeLoading={this.changeLoading}
+                    changeUserType={this.changeUserType}
+                    userInfo={this.state.userInfo}
+                  />
+                ) : (
+                  <Redirect to="/" />
+                )
+              }
+            />
+          </div>
+        </BrowserRouter>
       </div>
     );
   }
 }
 
 const AnomynousComponent = props => {
-  return props.in ? <AppNotLoggedIn {...props} /> : null
+  return <AppNotLoggedIn {...props} />;
 };
 
 const TeacherComponent = props => {
-  return props.in ? <AppTeacher {...props} /> : null
+  return <AppTeacher {...props} />;
 };
 
-
-
+const StudentComponent = props => {
+  return <h1>Student coming soon!</h1>;
+};
 
 export default App;

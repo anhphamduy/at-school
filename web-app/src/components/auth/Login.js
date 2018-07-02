@@ -1,4 +1,6 @@
 import React from "react";
+import { withRouter } from 'react-router-dom'
+
 import { Form, Icon, Input, Button, Checkbox, Row, Col } from "antd";
 import "antd/dist/antd.css";
 import { login } from "../../api/auth";
@@ -22,6 +24,11 @@ class NormalLoginForm extends React.Component {
       if (!err) {
         const data = await login(vals.username, vals.password, this.props.changeLoading);
         this.props.changeUserType(data)
+        if (data.userType === 1) {
+          this.props.history.push('/student')
+        } else {
+          this.props.history.push('/teacher')
+        }
       }
     } catch (error) {
       const message = JSON.parse(error.message)
@@ -92,4 +99,4 @@ class NormalLoginForm extends React.Component {
 
 const Login = Form.create()(NormalLoginForm);
 
-export default Login;
+export default withRouter(Login);
