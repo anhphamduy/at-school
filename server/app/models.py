@@ -6,6 +6,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 class Message(db.Model):
     __tablename__ = "message"
 
+    id = db.Column(db.Integer, primary_key=True)
     to_id = db.Column(db.Integer, db.ForeignKey('user.id'), primary_key=True)
     from_id = db.Column(db.Integer, db.ForeignKey('user.id'), primary_key=True)
     content = db.Column(db.String(1000))
