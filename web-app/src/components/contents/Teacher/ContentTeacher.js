@@ -1,23 +1,18 @@
 import React from "react";
 import { Menu, Layout } from "antd";
 import ContentContainer from "../ContentContainer";
-import NavTeacher from "../../navs/Teacher/NavTeacher";
 
-export default class ContentTeacher extends React.Component {
-  render() {
-    return (
-      <Layout
-        style={{
-          marginLeft: 80,
-          zIndex: 0
-        }}
-      >
-        <HorizontalNav mode={"Login"} />
-        <ContentContainer noGrid={true}>{this.props.children}</ContentContainer>
-      </Layout>
-    );
-  }
-}
+const ContentTeacher = props => (
+  <Layout
+    style={{
+      marginLeft: 80,
+      zIndex: 0
+    }}
+  >
+    <HorizontalNav mode={"Login"} />
+    <ContentContainer noGrid={true}>{props.children}</ContentContainer>
+  </Layout>
+);
 
 const HorizontalNav = props => {
   return (
@@ -48,3 +43,5 @@ const HorizontalNav = props => {
     </Layout.Header>
   );
 };
+
+export default ContentTeacher;

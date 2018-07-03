@@ -2,78 +2,6 @@ import React from "react";
 import { Icon, Input, Avatar } from "antd";
 
 export default class ChatBox extends React.Component {
-  state = {
-    messages: [
-      {
-        content: "Hello I am here",
-        self: false
-      },
-      {
-        content: "Hello I am here",
-        self: false
-      },
-      {
-        content: "Hello I am here",
-        self: true
-      },
-      {
-        content: "Hello I am here",
-        self: false
-      },
-      {
-        content: "Hello I am here",
-        self: true
-      },
-      {
-        content: "Hello I am here",
-        self: true
-      },
-      {
-        content: "Hello I am here",
-        self: false
-      },
-      {
-        content: "Hello I am here",
-        self: true
-      },
-      {
-        content: "Hello I am here",
-        self: false
-      },
-      {
-        content: "Hello I am here",
-        self: true
-      },
-      {
-        content: "Hello I am here",
-        self: true
-      },
-      {
-        content: "Hello I am here",
-        self: false
-      },
-      {
-        content: "Hello I am here",
-        self: true
-      },
-      {
-        content: "Hello I am here",
-        self: false
-      },
-      {
-        content: "Hello I am here",
-        self: true
-      }
-    ]
-  };
-
-  handleSendMessage = message => {
-    if (message) {
-      this.setState({
-        messages: [...this.state.messages, { content: message, self: true }]
-      });
-    }
-  };
 
   scrollToBottom = () => {
     this.messagesEnd.scrollIntoView({
@@ -87,15 +15,9 @@ export default class ChatBox extends React.Component {
     this.scrollToBottom();
   }
 
-  componentWillUpdate() {
-    console.log(this.props)
-  }
-
   componentDidUpdate() {
     this.scrollToBottom();
   }
-
-  scrollToLast = () => {};
 
   render() {
     return (
@@ -122,7 +44,7 @@ export default class ChatBox extends React.Component {
           }}
         >
           <div className="chatlogs friend">
-            {this.state.messages.map((message, key) => (
+            {this.props.messages.map((message, key) => (
               <ChatMessage key={key} {...message} />
             ))}
             <div
@@ -131,7 +53,7 @@ export default class ChatBox extends React.Component {
               }}
             />
           </div>
-          <ChatInput handleSendMessage={this.handleSendMessage} />
+          <ChatInput handleSendMessage={this.props.handleSendMessage} />
         </div>
       </div>
     );

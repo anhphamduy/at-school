@@ -82,8 +82,10 @@ export default class NavTeacher extends React.Component {
               </Link>
             </Menu.Item>
             <Menu.Item key="6">
-              <Icon type="video-camera" />
-              <span>Roll Call</span>
+              <Link to={"/teacher/rollcall"}>
+                <Icon type="video-camera" />
+                <span>Roll Call</span>
+              </Link>
             </Menu.Item>
             <Menu.Item key="7">
               <Icon type="logout" />

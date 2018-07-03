@@ -7,8 +7,8 @@ class Message(db.Model):
     __tablename__ = "message"
 
     id = db.Column(db.Integer, primary_key=True)
-    to_id = db.Column(db.Integer, db.ForeignKey('user.id'), primary_key=True)
-    from_id = db.Column(db.Integer, db.ForeignKey('user.id'), primary_key=True)
+    to_id = db.Column(db.Integer)
+    from_id = db.Column(db.Integer)
     content = db.Column(db.String(1000))
     timestamp = db.Column(db.DateTime, default=datetime.utcnow)
 
@@ -30,12 +30,6 @@ class User(db.Model):
     nfc_id = db.Column(db.String(30))
     school_id = db.Column(db.Integer)
     face_encoding = db.Column(db.String(2000))
-
-    # messages
-    sending_to = db.relationship(
-        'Message', backref='to', primaryjoin=id == Message.from_id)
-    receiving_from = db.relationship(
-        'Message', backref='from', primaryjoin=id == Message.to_id)
 
     def set_password(self, password):
         """Runs the passwords through a hash and appends."""

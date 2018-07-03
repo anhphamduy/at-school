@@ -4,6 +4,8 @@ import NavTeacher from "./navs/Teacher/NavTeacher";
 import { Route } from "react-router-dom";
 import TeacherDashboardScreen from "./contents/Teacher/TeacherDashboardScreen";
 import TeacherMessageScreen from "./contents/Teacher/TeacherMessageScreen";
+import TeacherRollCallScreen from "./contents/Teacher/TeacherRollCallScreen";
+
 
 const AppTeacher = props => (
   <div>
@@ -16,6 +18,10 @@ const AppTeacher = props => (
       <Route
         path={`/teacher/message`}
         component={() => <TeacherMessageScreen {...props} />}
+      />
+      <Route
+        path={`/teacher/rollcall`}
+        component={() => <TeacherRollCallScreen  {...props} />}
       />
     </Layout>
   </div>

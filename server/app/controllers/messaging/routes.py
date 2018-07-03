@@ -6,29 +6,6 @@ from config import Config
 from app.controllers.errors import bad_request
 from sqlalchemy import and_, or_
 
-
-@bp.route("/messaging", methods=["POST"])
-def send_message():
-    data = request.json()
-    try:
-        username = data["username"]
-        password = data["password"]
-        user = User.query.filter_by(username=username).first()
-        if user and user.check_password(password):
-            public_key = open(Config["JWT_KEY_PUBLIC"]).read()
-            private_key = open(Config["JWT_KEY_PRIVATE"]).read()
-            token = jwt.encode({
-                "id": user.id,
-                "username": username,
-                "public_key": public_key
-            }, private_key, algorithm="RS256")
-        else:
-            # return the error (404)
-            pass
-
-    except KeyError:
-        pass
-
 @bp.route("/getmessage", methods=["POST"])
 def get_message():
     try:
@@ -76,22 +53,24 @@ def get_message_details():
             return bad_request("User does not exist.")
 
         messages = Message.query.filter(or_(and_(Message.from_id==user_id, Message.to_id==other_id), \
-            and_(Message.from_id==other_id, Message.to_id==user_id))).order_by(Message.timestamp.desc()).all()
+            and_(Message.from_id==other_id, Message.to_id==user_id))).order_by(Message.timestamp.asc()).all()
         
         results = []
+        counter = 0
         for message in messages:
             if message.from_id == user_id:
                 results.append({
-                    "id": message.id,
+                    "id": counter,
                     "content": message.content,
                     "self": True
                 })
             else:
                 results.append({
-                    "id": message.id,
+                    "id": counter,
                     "content": message.content,
                     "self": False
                 })
+            counter += 1
         return jsonify({"results": results})
 
     except KeyError:

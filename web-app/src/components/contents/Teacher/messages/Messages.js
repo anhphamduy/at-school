@@ -2,15 +2,111 @@ import React from "react";
 import { Layout, Avatar } from "antd";
 import ListOfPeople from "./ListOfPeople";
 import ChatBox from "./chatUI/ChatBox";
+import { getMessageDetails, sendMessage } from "../../../../api/message";
 
 import "./Message.css";
 
 export default class Messages extends React.Component {
-  state = {};
-
-  getPersonInfo = personInfo => {
-    this.setState({ personInfo });
+  state = {
+    messages: [
+      {
+        content: "Hello I am here",
+        self: false
+      },
+      {
+        content: "Hello I am here",
+        self: false
+      },
+      {
+        content: "Hello I am here",
+        self: true
+      },
+      {
+        content: "Hello I am here",
+        self: false
+      },
+      {
+        content: "Hello I am here",
+        self: true
+      },
+      {
+        content: "Hello I am here",
+        self: true
+      },
+      {
+        content: "Hello I am here",
+        self: false
+      },
+      {
+        content: "Hello I am here",
+        self: true
+      },
+      {
+        content: "Hello I am here",
+        self: false
+      },
+      {
+        content: "Hello I am here",
+        self: true
+      },
+      {
+        content: "Hello I am here",
+        self: true
+      },
+      {
+        content: "Hello I am here",
+        self: false
+      },
+      {
+        content: "Hello I am here",
+        self: true
+      },
+      {
+        content: "Hello I am here",
+        self: false
+      },
+      {
+        content: "Hello I am here",
+        self: true
+      }
+    ]
   };
+
+  // assign other person into the state, also get all messages between the user and other person
+  getPersonInfo = async personInfo => {
+    if (personInfo) {
+      try {
+        const messages = await getMessageDetails(this.props.userInfo.token, personInfo.id);
+        this.setState({ personInfo, messages: await messages.results });
+      } catch (err) {
+        console.log(err);
+      }
+    }
+  };
+
+  handleSendMessage = async message => {
+    try {
+      if (message) {
+        sendMessage(this.props.userInfo.token, this.state.personInfo.id, message);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  updateNewMessage = () => {
+    this.updateMessageInterval = setInterval(() => {
+      this.getPersonInfo(this.state.personInfo);
+    }, 200);
+  };
+
+  componentWillMount() {
+    this.updateNewMessage();
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.updateMessageInterval);
+  }
 
   render() {
     return (
@@ -25,7 +121,11 @@ export default class Messages extends React.Component {
             borderRight: "1px rgb(232, 232, 232) solid"
           }}
         >
-          <ChatBox personInfo={this.state.personInfo} />
+          <ChatBox
+            handleSendMessage={this.handleSendMessage}
+            personInfo={this.state.personInfo}
+            messages={this.state.messages}
+          />
         </Layout.Content>
         <Layout.Sider
           className="bigSideBar"
