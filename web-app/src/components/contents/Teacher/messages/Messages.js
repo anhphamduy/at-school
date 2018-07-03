@@ -73,21 +73,31 @@ export default class Messages extends React.Component {
   };
 
   // assign other person into the state, also get all messages between the user and other person
-  getPersonInfo = async personInfo => {
+  getPersonInfo = async (personInfo, callback = () => {}) => {
     if (personInfo) {
       try {
-        const messages = await getMessageDetails(this.props.userInfo.token, personInfo.id);
-        this.setState({ personInfo, messages: await messages.results });
+        const messages = await getMessageDetails(
+          this.props.userInfo.token,
+          personInfo.id
+        );
+        this.setState(
+          { personInfo, messages: await messages.results },
+          callback()
+        );
       } catch (err) {
         console.log(err);
       }
     }
   };
 
-  handleSendMessage = async message => {
+  handleSendMessage = async (message, callback = () => {}) => {
     try {
       if (message) {
-        sendMessage(this.props.userInfo.token, this.state.personInfo.id, message);
+        sendMessage(
+          this.props.userInfo.token,
+          this.state.personInfo.id,
+          message
+        ).then(() => callback());
       }
     } catch (err) {
       console.log(err);
@@ -97,7 +107,7 @@ export default class Messages extends React.Component {
   updateNewMessage = () => {
     this.updateMessageInterval = setInterval(() => {
       this.getPersonInfo(this.state.personInfo);
-    }, 200);
+    }, 150);
   };
 
   componentWillMount() {

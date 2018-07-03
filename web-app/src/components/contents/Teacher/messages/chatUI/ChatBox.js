@@ -4,6 +4,7 @@ import { Icon, Input, Avatar } from "antd";
 export default class ChatBox extends React.Component {
 
   scrollToBottom = () => {
+    console.log("Here")
     this.messagesEnd.scrollIntoView({
       behavior: "instant",
       block: "end",
@@ -15,9 +16,18 @@ export default class ChatBox extends React.Component {
     this.scrollToBottom();
   }
 
+  shouldComponentUpdate(nextProps) {
+    if (this.props.messages.length != nextProps.messages.length || this.props.personInfo != nextProps.personInfo) {
+      return true
+    }
+    return false
+  }
+
+
   componentDidUpdate() {
     this.scrollToBottom();
   }
+
 
   render() {
     return (
@@ -53,7 +63,7 @@ export default class ChatBox extends React.Component {
               }}
             />
           </div>
-          <ChatInput handleSendMessage={this.props.handleSendMessage} />
+          <ChatInput handleSendMessage={this.props.handleSendMessage} scrollToBottom={this.scrollToBottom} />
         </div>
       </div>
     );
