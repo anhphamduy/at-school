@@ -23,7 +23,6 @@ export default class ChatBox extends React.Component {
     return false
   }
 
-
   componentDidUpdate() {
     this.scrollToBottom();
   }

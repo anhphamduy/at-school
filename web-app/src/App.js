@@ -5,6 +5,8 @@ import AppTeacher from "./components/AppTeacher";
 import Spinner from "./components/Spinner";
 import "./animations/fade.css";
 
+const UserContext = React.createContext()
+
 class App extends Component {
   state = {
     loading: false,
@@ -32,7 +34,7 @@ class App extends Component {
 
   render() {
     return (
-      <div>
+      <UserContext.Provider value={this.state.userInfo}>
         <Spinner loading={this.state.loading} />
         <BrowserRouter>
           <div>
@@ -78,7 +80,7 @@ class App extends Component {
             />
           </div>
         </BrowserRouter>
-      </div>
+      </UserContext.Provider>
     );
   }
 }
