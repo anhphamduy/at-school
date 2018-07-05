@@ -2,10 +2,11 @@ import React from "react";
 import Webcam from "react-webcam";
 import "./RollCall.css";
 import { uploadImage } from "../../../../api/camera";
+import { AppContext } from "../../../../App";
 
 import { Table, Input, Button, Icon } from "antd";
 
-export default class RollCall extends React.Component {
+class RollCall extends React.Component {
   render() {
     return (
       <div className="RollCall" style={{ marginTop: "5vh", height: "100%" }}>
@@ -30,10 +31,9 @@ export default class RollCall extends React.Component {
 }
 
 class Camera extends React.Component {
-
   state = {
-    sendImage: null,
-  }
+    sendImage: null
+  };
 
   setRef = webcam => {
     this.webcam = webcam;
@@ -46,17 +46,16 @@ class Camera extends React.Component {
 
   upload() {
     const imageSrc = this.webcam.getScreenshot();
-    if (imageSrc !== null)
-      uploadImage(imageSrc);
+    if (imageSrc !== null) uploadImage(imageSrc);
   }
 
   componentDidMount() {
-    let sendImage = setInterval(() => this.upload(), 500)
-    this.setState({sendImage})
+    let sendImage = setInterval(() => this.upload(), 500);
+    this.setState({ sendImage });
   }
 
   componentWillUnmount() {
-    clearInterval(this.state.sendImage)
+    clearInterval(this.state.sendImage);
   }
 
   render() {
@@ -234,3 +233,9 @@ class CurrentClassTable extends React.Component {
     );
   }
 }
+
+export default props => (
+  <AppContext.Consumer>
+    {values => <RollCall {...props} {...values} />}
+  </AppContext.Consumer>
+);

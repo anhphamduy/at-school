@@ -5,7 +5,7 @@ import AppTeacher from "./components/AppTeacher";
 import Spinner from "./components/Spinner";
 import "./animations/fade.css";
 
-const UserContext = React.createContext()
+export const AppContext = React.createContext();
 
 class App extends Component {
   state = {
@@ -34,10 +34,17 @@ class App extends Component {
 
   render() {
     return (
-      <UserContext.Provider value={this.state.userInfo}>
+      <AppContext.Provider
+        value={{
+          userInfo: this.state.userInfo,
+          changeLoading: this.changeLoading,
+          changeUserType: this.changeUserType,
+          success: "True",
+        }}
+      >
         <Spinner loading={this.state.loading} />
         <BrowserRouter>
-          <div>
+          <React.Fragment>
             <Route
               exact
               path="/"
@@ -52,11 +59,7 @@ class App extends Component {
               path="/teacher"
               component={() =>
                 this.state.userInfo.userType === 2 ? (
-                  <AppTeacher
-                    changeLoading={this.changeLoading}
-                    changeUserType={this.changeUserType}
-                    userInfo={this.state.userInfo}
-                  />
+                  <AppTeacher />
                 ) : (
                   <Redirect to="/" />
                 )
@@ -68,19 +71,15 @@ class App extends Component {
               path="/student"
               component={() =>
                 this.state.userInfo.userType === 1 ? (
-                  <StudentComponent
-                    changeLoading={this.changeLoading}
-                    changeUserType={this.changeUserType}
-                    userInfo={this.state.userInfo}
-                  />
+                  <StudentComponent />
                 ) : (
                   <Redirect to="/" />
                 )
               }
             />
-          </div>
+          </React.Fragment>
         </BrowserRouter>
-      </UserContext.Provider>
+      </AppContext.Provider>
     );
   }
 }

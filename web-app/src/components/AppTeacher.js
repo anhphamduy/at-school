@@ -6,22 +6,21 @@ import TeacherDashboardScreen from "./contents/Teacher/TeacherDashboardScreen";
 import TeacherMessageScreen from "./contents/Teacher/TeacherMessageScreen";
 import TeacherRollCallScreen from "./contents/Teacher/TeacherRollCallScreen";
 
-
-const AppTeacher = props => (
+const AppTeacher = () => (
   <div>
     <Layout style={{ minHeight: "100%" }}>
-      <NavTeacher {...props} />
+      <NavTeacher />
       <Route
         path={`/teacher/dashboard`}
-        component={() => <TeacherDashboardScreen {...props} />}
+        component={() => <TeacherDashboardScreen />}
       />
       <Route
         path={`/teacher/message`}
-        component={() => <TeacherMessageScreen {...props} />}
+        component={() => <TeacherMessageScreen />}
       />
       <Route
         path={`/teacher/rollcall`}
-        component={() => <TeacherRollCallScreen  {...props} />}
+        component={() => <TeacherRollCallScreen />}
       />
     </Layout>
   </div>

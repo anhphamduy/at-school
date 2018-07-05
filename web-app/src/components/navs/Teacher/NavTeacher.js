@@ -4,10 +4,11 @@ import { Menu, Icon, Avatar } from "antd";
 import NavContainer from "../NavContainer";
 import SchoolLogo from "../SchoolLogo";
 import { logout } from "../../../api/auth";
+import { AppContext } from "../../../App";
 import "antd/dist/antd.css";
 import "./Navs.css";
 
-export default class NavTeacher extends React.Component {
+class NavTeacher extends React.Component {
   state = {
     spinnerVisible: false,
     menuDisabled: true
@@ -97,7 +98,6 @@ export default class NavTeacher extends React.Component {
     );
   }
 }
-const Temp = () => <h1>Hello</h1>;
 
 // please remove important from source code in order to make the style works padding: 0 32px !important in css dist antd;
 const UserAvatarNav = props => {
@@ -121,3 +121,9 @@ const UserAvatarNav = props => {
     </div>
   );
 };
+
+export default props => (
+  <AppContext.Consumer>
+    {users => <NavTeacher {...props} {...users} />}
+  </AppContext.Consumer>
+);

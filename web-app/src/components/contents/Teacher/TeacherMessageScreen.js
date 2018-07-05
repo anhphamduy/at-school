@@ -5,8 +5,8 @@ import Messages from "./messages/Messages";
 export default class TeacherMessageScreen extends React.Component {
   render() {
     return (
-      <ContentTeacher {...this.props}>
-        <Messages {...this.props} />
+      <ContentTeacher>
+        <Messages />
       </ContentTeacher>
     );
   }

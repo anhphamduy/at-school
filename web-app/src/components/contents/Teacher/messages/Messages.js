@@ -3,10 +3,11 @@ import { Layout, Avatar } from "antd";
 import ListOfPeople from "./ListOfPeople";
 import ChatBox from "./chatUI/ChatBox";
 import { getMessageDetails, sendMessage } from "../../../../api/message";
+import { AppContext } from "../../../../App";
 
 import "./Message.css";
 
-export default class Messages extends React.Component {
+class Messages extends React.Component {
   state = {
     messages: [
       {
@@ -167,3 +168,9 @@ export default class Messages extends React.Component {
     );
   }
 }
+
+export default props => (
+  <AppContext.Consumer>
+    {values => <Messages {...props} {...values} />}
+  </AppContext.Consumer>
+);
