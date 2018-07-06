@@ -116,12 +116,13 @@ def sentence_to_vector(X, max_len=25):
         
         # get the vector representation of the word from the dictionary
         word_vector = GloveEmbedding.query.filter_by(word=w).first()
-        word_vector = word_vector.vector
-        word_vector = np.fromstring(word_vector)
-        np.reshape(word_vector, (1, 200))
+        if word_vector:
+            word_vector = word_vector.vector
+            word_vector = np.fromstring(word_vector)
+            np.reshape(word_vector, (1, 200))
 
-        # put it in the vector for returning
-        vector[0, i, :] = word_vector
+            # put it in the vector for returning
+            vector[0, i, :] = word_vector
         i += 1
     
     return vector

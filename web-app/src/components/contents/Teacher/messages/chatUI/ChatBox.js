@@ -1,10 +1,8 @@
 import React from "react";
-import { Icon, Input, Avatar } from "antd";
+import { Icon, Input, Avatar, Layout } from "antd";
 
 export default class ChatBox extends React.Component {
-
   scrollToBottom = () => {
-    console.log("Here")
     this.messagesEnd.scrollIntoView({
       behavior: "instant",
       block: "end",
@@ -17,54 +15,68 @@ export default class ChatBox extends React.Component {
   }
 
   shouldComponentUpdate(nextProps) {
-    if (this.props.messages.length != nextProps.messages.length || this.props.personInfo != nextProps.personInfo) {
-      return true
+    if (
+      this.props.messages.length != nextProps.messages.length ||
+      this.props.personInfo != nextProps.personInfo
+    ) {
+      return true;
     }
-    return false
+    return false;
   }
 
   componentDidUpdate() {
     this.scrollToBottom();
   }
 
-
   render() {
     return (
-      <div
+      <Layout.Content
         style={{
-          height: "100%",
-          width: "100%",
-          display: "flex",
-          flexDirection: "column"
+          position: "relative",
+          marginTop: "5vh",
+          marginLeft: "200px",
+          height: "95vh",
+          borderRight: "1px rgb(232, 232, 232) solid",
+          width: "50%"
         }}
       >
-        <div className="chat-name">
-          {this.props.personInfo
-            ? this.props.personInfo.fullname
-            : "hello"}
-        </div>
         <div
-          className="chatbox"
           style={{
-            display: "flex",
-            flexDirection: "column",
+            height: "100%",
             width: "100%",
-            flex: 1
+            display: "flex",
+            flexDirection: "column"
           }}
         >
-          <div className="chatlogs friend">
-            {this.props.messages.map((message, key) => (
-              <ChatMessage key={key} {...message} />
-            ))}
-            <div
-              ref={el => {
-                this.messagesEnd = el;
-              }}
+          <div className="chat-name">
+            {this.props.personInfo ? this.props.personInfo.fullname : "hello"}
+          </div>
+          <div
+            className="chatbox"
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              width: "100%",
+              flex: 1
+            }}
+          >
+            <div className="chatlogs friend">
+              {this.props.messages.map((message, key) => (
+                <ChatMessage key={key} {...message} />
+              ))}
+              <div
+                ref={el => {
+                  this.messagesEnd = el;
+                }}
+              />
+            </div>
+            <ChatInput
+              handleSendMessage={this.props.handleSendMessage}
+              scrollToBottom={this.scrollToBottom}
             />
           </div>
-          <ChatInput handleSendMessage={this.props.handleSendMessage} scrollToBottom={this.scrollToBottom} />
         </div>
-      </div>
+      </Layout.Content>
     );
   }
 }
@@ -80,7 +92,7 @@ class ChatInput extends React.Component {
 
   render() {
     return (
-      <div style={{ flex: "1" }}>
+      <div>
         <div
           style={{
             flexDirection: "row",
@@ -100,12 +112,10 @@ class ChatInput extends React.Component {
               borderRadius: "0px",
               border: "0px",
               resize: "none",
-              paddingBottom: 0,
-              paddingTop: 0,
-              minHeight: "100%",
-              maxHeight: "100%"
+              paddingBottom: "10px",
+              paddingTop: "10px"
             }}
-            autosize={{ minRows: 4, maxRows: 6 }}
+            autosize={{ minRows: 1, maxRows: 3 }}
           />
           <Icon
             type="up-circle"
@@ -125,9 +135,8 @@ class ChatInput extends React.Component {
 }
 
 const ChatMessage = props => {
-  const className = "chat" + (props.self ? " self" : "");
   return (
-    <div className={className}>
+    <div className={"chat" + (props.self ? " self" : "")}>
       {!props.self ? (
         <Avatar
           style={{ zIndex: 500 }}

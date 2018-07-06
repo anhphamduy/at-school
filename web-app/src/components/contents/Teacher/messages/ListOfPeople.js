@@ -197,28 +197,11 @@ class ListDefault extends React.Component {
   fetchUsers = async () => {
     try {
       const users = await getMessage(1, this.props.userInfo.token);
-      this.setState({ users: users.results });
+      this.setState({ users: users.results }, () => this.props.getPersonInfo(this.state.users[0]));
       console.log(users);
     } catch (err) {
       console.log(err);
     }
-  };
-
-  fetchUser = async () => {
-    fetch("http://localhost:5000/getmessage")
-      .then(res => res.json())
-      .then(res => {
-        this.setState({
-          teachers: {
-            ...this.state.teachers,
-            teacherData: res.results
-          },
-          students: {
-            ...this.state.students,
-            studentData: res.results
-          }
-        });
-      });
   };
 
   render() {
