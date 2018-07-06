@@ -31,6 +31,9 @@ def create_app(config_class=Config):
     from app.controllers.messaging import bp as messaging_bp
     app.register_blueprint(messaging_bp)
 
+    from app.controllers.emojifier import bp as emojifier_bp
+    app.register_blueprint(emojifier_bp)
+
     from app.controllers.errors import bp as errors_bp
     app.register_blueprint(errors_bp)
     

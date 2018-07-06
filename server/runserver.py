@@ -10,4 +10,5 @@ def make_shell_context():
     return {'db': db, 'User': User, "Message": Message, "GloveEmbedding": GloveEmbedding, "read_glove_vecs": read_glove_vecs, "save_database": save_database}
 
 
+
 app.run(host='0.0.0.0')

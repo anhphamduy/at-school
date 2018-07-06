@@ -8,3 +8,4 @@ migrations/
 keys/
 app.db
 glove.6B.200d.txt
+emojifier_LSTM.h5
