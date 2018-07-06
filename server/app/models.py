@@ -3,6 +3,11 @@ from datetime import datetime
 from hashlib import md5
 from werkzeug.security import generate_password_hash, check_password_hash
 
+class GloveEmbedding(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    word = db.Column(db.String(1000), nullable=False)
+    vector = db.Column(db.String(3000), nullable=False)
+
 class Message(db.Model):
     __tablename__ = "message"
 
