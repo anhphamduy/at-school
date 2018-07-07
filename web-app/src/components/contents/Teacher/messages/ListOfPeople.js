@@ -197,9 +197,7 @@ class ListDefault extends React.Component {
   fetchUsers = async () => {
     try {
       const users = await getMessage(1, this.props.userInfo.token);
-      this.setState({ users: users.results }, () =>
-        this.props.getPersonInfo(this.state.users[0])
-      );
+      this.setState({ users: users.results }, () => this.props.getPersonInfo(this.state.users[0]));
       console.log(users);
     } catch (err) {
       console.log(err);
@@ -214,9 +212,7 @@ class ListDefault extends React.Component {
           mode="inline"
           defaultSelectedKeys={["0"]}
           onClick={key => {
-            this.props.getPersonInfo(
-              this.state.users[Number.parseInt(key.key)]
-            );
+            this.props.getPersonInfo(this.state.users[Number.parseInt(key.key)])
           }}
         >
           {this.state.users.map((user, index) => {

@@ -1,7 +1,5 @@
 import React from "react";
 import { Icon, Input, Avatar, Layout } from "antd";
-import { getEmoji } from "../../../../../api/emojifier";
-import { AppContext } from "../../../../../App";
 
 export default class ChatBox extends React.Component {
   scrollToBottom = () => {
@@ -72,15 +70,10 @@ export default class ChatBox extends React.Component {
                 }}
               />
             </div>
-            <AppContext.Consumer>
-              {values => (
-                <ChatInput
-                  handleSendMessage={this.props.handleSendMessage}
-                  scrollToBottom={this.scrollToBottom}
-                  {...values}
-                />
-              )}
-            </AppContext.Consumer>
+            <ChatInput
+              handleSendMessage={this.props.handleSendMessage}
+              scrollToBottom={this.scrollToBottom}
+            />
           </div>
         </div>
       </Layout.Content>
@@ -95,25 +88,6 @@ class ChatInput extends React.Component {
 
   handleChangeText = event => {
     this.setState({ value: event.target.value });
-  };
-
-  handleSendMessage = () => {
-    this.props.handleSendMessage(this.state.value);
-    this.setState({ value: "" });
-  };
-
-  handleGetEmoji = async () => {
-    console.log(this.props);
-    try {
-      const data = await getEmoji(this.state.value, this.props.userInfo.token);
-      const emojis = await Object.keys(data.emojis).reduce(
-        (total, next) => total + data.emojis[next],
-        ""
-      );
-      this.setState({value: this.state.value + emojis})
-    } catch (err) {
-      console.log(err);
-    }
   };
 
   render() {
@@ -143,41 +117,22 @@ class ChatInput extends React.Component {
             }}
             autosize={{ minRows: 1, maxRows: 3 }}
           />
-          <ChatIcons
-            handleGetEmoji={this.handleGetEmoji}
-            handleSendMessage={() => this.handleSendMessage()}
+          <Icon
+            type="up-circle"
+            style={{
+              zIndex: 1000,
+              fontSize: 20
+            }}
+            onClick={() => {
+              this.setState({ value: "" });
+              this.props.handleSendMessage(this.state.value);
+            }}
           />
         </div>
       </div>
     );
   }
 }
-
-const ChatIcons = props => (
-  <React.Fragment>
-    <Icon
-      type="smile-o"
-      style={{
-        zIndex: 1000,
-        fontSize: 20,
-        marginRight: 10
-      }}
-      onClick={() => {
-        props.handleGetEmoji();
-      }}
-    />
-    <Icon
-      type="up-circle"
-      style={{
-        zIndex: 1000,
-        fontSize: 20
-      }}
-      onClick={() => {
-        props.handleSendMessage();
-      }}
-    />
-  </React.Fragment>
-);
 
 const ChatMessage = props => {
   return (
