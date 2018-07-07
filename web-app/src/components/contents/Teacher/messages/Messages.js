@@ -2,7 +2,7 @@ import React from "react";
 import { Layout, Avatar } from "antd";
 import ListOfPeople from "./ListOfPeople";
 import ChatBox from "./chatUI/ChatBox";
-import RightSiderPersonInfo from "./chatUI/RightSiderPersonInfo"
+import RightSiderPersonInfo from "./chatUI/RightSiderPersonInfo";
 import { getMessageDetails, sendMessage } from "../../../../api/message";
 import { AppContext } from "../../../../App";
 
@@ -68,7 +68,7 @@ class Messages extends React.Component {
           personInfo={this.state.personInfo}
           messages={this.state.messages}
         />
-        <RightSiderPersonInfo personInfo={this.state.personInfo}/>
+        <RightSiderPersonInfo personInfo={this.state.personInfo} />
       </Layout>
     );
   }
