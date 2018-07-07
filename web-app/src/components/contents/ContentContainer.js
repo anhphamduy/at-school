@@ -1,22 +1,14 @@
 import React from "react";
 import { Row, Col, Layout } from "antd";
 
-const { Content } = Layout;
-
 export default class ContentContainer extends React.Component {
   render() {
     return (
-      <Content
+      <Layout.Content
         style={{
           background: "#fff"
         }}
       >
-        <div
-          style={{
-            minHeight: "100vh",
-            width: "100%"
-          }}
-        >
           {this.props.noGrid ? (
             this.props.children
           ) : (
@@ -28,8 +20,7 @@ export default class ContentContainer extends React.Component {
               <Col span={1} />
             </Row>
           )}
-        </div>
-      </Content>
+      </Layout.Content>
     );
   }
 }

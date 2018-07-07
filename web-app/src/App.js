@@ -39,7 +39,7 @@ class App extends Component {
           userInfo: this.state.userInfo,
           changeLoading: this.changeLoading,
           changeUserType: this.changeUserType,
-          success: "True",
+          success: "True"
         }}
       >
         <Spinner loading={this.state.loading} />

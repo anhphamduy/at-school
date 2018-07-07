@@ -15,7 +15,7 @@ class NavTeacher extends React.Component {
   };
 
   changeMenuSelection = menuKey => {
-    if (menuKey === "7") {
+    if (menuKey === "8") {
       this.props.changeLoading();
       logout(this.props.userInfo.token, () => {
         this.props.changeLoading();
@@ -77,18 +77,24 @@ class NavTeacher extends React.Component {
               </Link>
             </Menu.Item>
             <Menu.Item key="5">
+              <Link to={"/teacher/classroom"}>
+                <Icon type="book" />
+                <span>Classroom</span>
+              </Link>
+            </Menu.Item>
+            <Menu.Item key="6">
               <Link to={"/teacher/message"}>
                 <Icon type="message" />
                 <span>Messages</span>
               </Link>
             </Menu.Item>
-            <Menu.Item key="6">
+            <Menu.Item key="7">
               <Link to={"/teacher/rollcall"}>
                 <Icon type="video-camera" />
                 <span>Roll Call</span>
               </Link>
             </Menu.Item>
-            <Menu.Item key="7">
+            <Menu.Item key="8">
               <Icon type="logout" />
               <span>Log out</span>
             </Menu.Item>
