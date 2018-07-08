@@ -15,6 +15,27 @@
   margin-bottom: 20px;
 }
 
+.Classroom .ListOfClasses {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  padding: 1em;
+}
+
+.Classroom .ListOfClasses:after {
+  content: "";
+  flex: auto;
+  justify-content: space-between;
+  width: 300px;
+}
+
+.Classroom .ListOfClasses .ClassCard {
+  margin: 0.5em;
+  -webkit-box-shadow: -1px -1px 15px -10px rgba(0, 0, 0, 1);
+  -moz-box-shadow: -1px -1px 15px -10px rgba(0, 0, 0, 1);
+  box-shadow: -1px -1px 15px -10px rgba(0, 0, 0, 1);
+}
+
 .NewClassForm p {
   margin-bottom: 3px;
 }
@@ -33,7 +54,6 @@
 .NewClassForm .Picker p {
   width: 52px;
 }
-
 
 .NewClassForm .ant-select {
   margin-left: 8px;

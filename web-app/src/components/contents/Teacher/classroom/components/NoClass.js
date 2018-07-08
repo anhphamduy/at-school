@@ -1,5 +1,7 @@
 import React from "react";
 import { Modal, Button, Input, Select } from "antd";
+import { AppContext } from "../../../../../App";
+import { createClass } from "../../../../../api/classroom";
 
 export default class NoClass extends React.Component {
   state = {
@@ -12,15 +14,19 @@ export default class NoClass extends React.Component {
     });
   };
 
-  handleAdd = classInfo => {
-    console.log(classInfo);
-    this.setState({
-      newClassFormVisible: false
-    });
+  handleAdd = async classInfo => {
+    try {
+      const result = await createClass(classInfo, classInfo.token, () =>
+        this.setState({
+          newClassFormVisible: false
+        })
+      );
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   handleCancel = e => {
-    console.log(e);
     this.setState({
       newClassFormVisible: false
     });
@@ -28,28 +34,33 @@ export default class NoClass extends React.Component {
 
   render() {
     return (
-      <div style={{ padding: "80px 100px", textAlign: "center" }}>
-        <div className="NoClass">
-          <p id="heading">
-            Looks like you are not managing any classrooms... yet.
-          </p>
-          <Button
-            size="large"
-            type="primary"
-            onClick={this.showAddClassroomForm}
-          >
-            Create your first new classroom
-          </Button>
-          <div>
-            <img src="/classroomIcon.png" />
+      <AppContext>
+        {value => (
+          <div style={{ padding: "80px 100px", textAlign: "center" }}>
+            <div className="NoClass">
+              <p id="heading">
+                Looks like you are not managing any classrooms... yet.
+              </p>
+              <Button
+                size="large"
+                type="primary"
+                onClick={this.showAddClassroomForm}
+              >
+                Create your first new classroom
+              </Button>
+              <div>
+                <img src="/classroomIcon.png" />
+              </div>
+              <NewClassForm
+                token={value.userInfo.token}
+                visible={this.state.newClassFormVisible}
+                handleAdd={this.handleAdd}
+                handleCancel={this.handleCancel}
+              />
+            </div>
           </div>
-          <NewClassForm
-            visible={this.state.newClassFormVisible}
-            handleAdd={this.handleAdd}
-            handleCancel={this.handleCancel}
-          />
-        </div>
-      </div>
+        )}
+      </AppContext>
     );
   }
 }
@@ -58,7 +69,9 @@ class NewClassForm extends React.Component {
   state = {
     className: "",
     classDescription: "",
-    classFalcuty: "0"
+    classFalcuty: "0",
+    classLine: "1",
+    token: this.props.token
   };
 
   handleInputChange = fieldChange => e => {
@@ -95,7 +108,7 @@ class NewClassForm extends React.Component {
           />
         </div>
         <div style={{ marginBottom: "20px" }}>
-          <LinePicker onChange={this.handleInputChange("classFalcuty")} />
+          <LinePicker onChange={this.handleInputChange("classLine")} />
         </div>
         <div>
           <FalcutyPicker onChange={this.handleInputChange("classFalcuty")} />
@@ -108,7 +121,7 @@ class NewClassForm extends React.Component {
 const LinePicker = props => (
   <div className="Picker">
     <p>Line:</p>
-    <Select onChange={props.onChange} defaultValue="0">
+    <Select onChange={props.onChange} defaultValue="1">
       <Select.Option value="1">1</Select.Option>
       <Select.Option value="2">2</Select.Option>
       <Select.Option value="3">3</Select.Option>
