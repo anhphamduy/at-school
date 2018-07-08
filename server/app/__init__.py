@@ -34,6 +34,12 @@ def create_app(config_class=Config):
     from app.controllers.emojifier import bp as emojifier_bp
     app.register_blueprint(emojifier_bp)
 
+    from app.controllers.schedule import bp as schedule_bp
+    app.register_blueprint(schedule_bp)
+
+    from app.controllers.classroom import bp as classroom_bp
+    app.register_blueprint(classroom_bp)
+
     from app.controllers.errors import bp as errors_bp
     app.register_blueprint(errors_bp)
     
