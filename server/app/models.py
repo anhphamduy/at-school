@@ -81,15 +81,36 @@ class User(db.Model):
         return '<User {}>'.format(self.username)
 
 class Class(db.Model):
-    
+    __tablename__ = "class"
+
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100))
     description = db.Column(db.String(255))
-    start_time = db.Column(db.String(255))
-    end_time = db.Column(db.String(255))
+    line_id = db.Column(db.Integer, db.ForeignKey("line.id"))
 
     def __repr__(self):
         return "<Class {}>".format(self.name)
+
+class Line(db.Model):
+    __tablename__ = "line"
+
+    id = db.Column(db.Integer, primary_key=True)
+    schedule = db.relationship("Day", secondary="line_schedule", lazy="dynamic")
+    class_id = db.relationship("Class", backref="class_id", lazy="dynamic")
+
+class Day(db.Model):
+    __tablename__ = "day"
+
+    id = db.Column(db.String(10), primary_key=True)
+    line = db.relationship("Line", secondary="line_schedule", lazy="dynamic")
+
+class Line_Schedule(db.Model):
+    __tablename__ = "line_schedule"
+
+    line_id = db.Column(db.Integer, db.ForeignKey("line.id"), primary_key=True)
+    day_id = db.Column(db.Integer, db.ForeignKey("day.id"), primary_key=True)
+    start_time = db.Column(db.Time)
+    end_time = db.Column(db.Time)
 
 class Post(db.Model):
     id = db.Column(db.Integer, primary_key=True)
