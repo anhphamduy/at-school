@@ -1,7 +1,8 @@
 from app import create_app, db
-from app.models import User, Message, GloveEmbedding, Line, Day, Line_Schedule
-from app.controllers.emojifier.helpers import read_glove_vecs, save_database
-from app.controllers.schedule.helpers import setup_schedule, setup_line_time
+from app.models import User, Message, GloveEmbedding, Line, Day, Line_Schedule, Falcuty, Class
+from app.controllers.emojifier.helpers import emojifier_setup
+from app.controllers.schedule.helpers import schedule_setup, setup_line_time
+from app.controllers.classroom.helpers import falcuty_setup
 
 # get the app instance
 app = create_app()
@@ -14,12 +15,14 @@ def make_shell_context():
         "Message": Message, 
         "Line": Line,
         "Day": Day,
+        "Class": Class,
+        "Falcuty": Falcuty,
         "Line_Schedule": Line_Schedule,
         "GloveEmbedding": GloveEmbedding, 
-        "read_glove_vecs": read_glove_vecs, 
-        "save_database": save_database,
-        "setup_schedule": setup_schedule,
-        "setup_line_time": setup_line_time
+        "emojifier_setup": emojifier_setup,
+        "schedule_setup": schedule_setup,
+        "setup_line_time": setup_line_time,
+        "falcuty_setup": falcuty_setup
     }
 
 

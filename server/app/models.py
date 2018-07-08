@@ -35,6 +35,7 @@ class User(db.Model):
     nfc_id = db.Column(db.String(30))
     school_id = db.Column(db.Integer)
     face_encoding = db.Column(db.String(2000))
+    class_teach = db.relationship("Class", backref="classes_teach", lazy="dynamic")
 
     def set_password(self, password):
         """Runs the passwords through a hash and appends."""
@@ -82,21 +83,29 @@ class User(db.Model):
 
 class Class(db.Model):
     __tablename__ = "class"
-
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100))
     description = db.Column(db.String(255))
     line_id = db.Column(db.Integer, db.ForeignKey("line.id"))
+    teacher_id = db.Column(db.Integer, db.ForeignKey("user.id"))
+    falcuty_id = db.Column(db.Integer, db.ForeignKey("falcuty.id"))
 
     def __repr__(self):
         return "<Class {}>".format(self.name)
+
+class Falcuty(db.Model):
+    __tablename__ = "falcuty"
+
+    id = db.Column(db.Integer, primary_key=True)
+    falcuty_name = db.Column(db.String(200))
+    class_id = db.relationship("Class", backref="classes", lazy="dynamic")
 
 class Line(db.Model):
     __tablename__ = "line"
 
     id = db.Column(db.Integer, primary_key=True)
     schedule = db.relationship("Day", secondary="line_schedule", lazy="dynamic")
-    class_id = db.relationship("Class", backref="class_id", lazy="dynamic")
+    class_id = db.relationship("Class", backref="class_schedule", lazy="dynamic")
 
 class Day(db.Model):
     __tablename__ = "day"

@@ -88,6 +88,10 @@ def save_database(words_to_index, word_to_vec_map, db, GloveEmbedding):
         return False
     return True
 
+def emojifier_setup(db, GloveEmbedding):
+    words_to_index, index_to_words, word_to_vec_map = read_glove_vecs()
+    save_database(words_to_index, word_to_vec_map, db, GloveEmbedding)
+
 def get_model():
     global emojifier_model
     current_path = os.path.dirname(__file__)

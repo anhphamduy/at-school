@@ -99,7 +99,7 @@ def setup_line_time(db, Line_Schedule):
         db.session.commit()
     
 
-def setup_schedule(db, Day, Line, Line_Schedule):
+def schedule_setup(db, Day, Line, Line_Schedule):
     add_days(db, Day)
     add_lines(db, Line)
     setup_line_time(db, Line_Schedule)
