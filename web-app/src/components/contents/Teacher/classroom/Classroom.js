@@ -13,12 +13,17 @@ class Classroom extends React.Component {
   };
 
   componentDidMount() {
+    this.getClassIds()
+  }
+
+  getClassIds = async () => {
+    this.setState({ready: false})
     teacherHasClass(this.props.userInfo.token)
       .then(hasClass => {
         if (hasClass.result) {
           this.setState({
             hasClass: true,
-            classId: hasClass.number,
+            classIds: hasClass.classes,
             ready: true
           });
         } else {
@@ -35,12 +40,12 @@ class Classroom extends React.Component {
         {this.state.ready ? (
           <div
             className="Classroom"
-            style={{ marginTop: "5vh", height: "95vh" }}
+            style={{ marginTop: "5vh", minHeight: "95vh" }}
           >
             {!this.state.hasClass ? (
-              <NoClass />
+              <NoClass addClass={this.getClassIds}/>
             ) : (
-              <ListOfClasses token={this.props.userInfo.token} classId={this.state.classId} />
+              <ListOfClasses token={this.props.userInfo.token} classIds={this.state.classIds} />
             )}
           </div>
         ) : null}

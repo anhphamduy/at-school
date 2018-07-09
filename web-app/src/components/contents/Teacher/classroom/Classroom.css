@@ -15,6 +15,12 @@
   margin-bottom: 20px;
 }
 
+.Classroom .NoClass img {
+  margin-top: 50px;
+  width: 125px;
+  opacity: 0.9;
+}
+
 .Classroom .ListOfClasses {
   display: flex;
   flex-wrap: wrap;
@@ -34,6 +40,15 @@
   -webkit-box-shadow: -1px -1px 15px -10px rgba(0, 0, 0, 1);
   -moz-box-shadow: -1px -1px 15px -10px rgba(0, 0, 0, 1);
   box-shadow: -1px -1px 15px -10px rgba(0, 0, 0, 1);
+}
+
+.Classroom .ListOfClasses .AddClassCard {
+  width: 300px;
+  height: 322.84px;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  text-align: center;
 }
 
 .NewClassForm p {
@@ -58,10 +73,4 @@
 .NewClassForm .ant-select {
   margin-left: 8px;
   width: 60%;
-}
-
-.Classroom .NoClass img {
-  margin-top: 50px;
-  width: 125px;
-  opacity: 0.9;
 }
