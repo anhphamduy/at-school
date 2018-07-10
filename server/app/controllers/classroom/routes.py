@@ -33,7 +33,7 @@ def create_class():
         db.session.add(new_class)
         db.session.commit()
         
-        return jsonify({"success": True})
+        return jsonify({"success": True, "id": new_class.id})
 
     except KeyError:
         pass
@@ -59,6 +59,7 @@ def get_class_teacher():
         results = []
         for c in classes:
             results.append({
+                "id": c.id,
                 "name": c.name,
                 "description": c.description,
                 "line": c.line_id,
