@@ -1,0 +1,5 @@
+ClassFormConfirm example:
+
+```js
+<ClassFormConfirm />
+```

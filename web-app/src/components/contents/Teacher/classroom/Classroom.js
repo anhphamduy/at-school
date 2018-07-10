@@ -4,7 +4,7 @@ import ListOfClasses from "./components/ListOfClasses";
 import { teacherHasClass } from "./../../../../api/classroom";
 import Spinner from "../../../Spinner";
 import { AppContext } from "../../../../App";
-import "./Classroom.css";
+import "../../../../styles/classroom/Classroom.css";
 
 class Classroom extends React.Component {
   state = {

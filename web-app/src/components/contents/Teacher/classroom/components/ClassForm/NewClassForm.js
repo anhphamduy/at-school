@@ -1,11 +1,14 @@
 import React from "react";
-import ClassForm from "./ClassForm";
+import ClassForm from "./Form/ClassForm";
 import { AppContext } from "../../../../../../App";
 
-const NewClassForm = props => <ClassForm {...props} title="New classroom" />;
-
-export default props => (
+/** 
+ * Render ClassForm but with "New classroom title
+ */
+const NewClassForm = props => (
   <AppContext>
-    {value => <NewClassForm {...props} token={value.userInfo.token} />}
+    {value => <ClassForm title="New classroom" {...props} token={value.userInfo.token} />}
   </AppContext>
 );
+
+export default NewClassForm;

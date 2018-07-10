@@ -1,0 +1,17 @@
+.Picker {
+  display: flex;
+  align-items: center;
+}
+.Picker p {
+  margin-bottom: 0;
+  margin-right: 16px;
+  width: 52px;
+}
+.Picker .ant-select {
+  -ms-box-sizing: content-box;
+  -moz-box-sizing: content-box;
+  box-sizing: content-box;
+  -webkit-box-sizing: content-box;
+}
+
+/*# sourceMappingURL=Picker.css.map */

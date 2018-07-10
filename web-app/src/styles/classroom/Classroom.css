@@ -1,20 +1,17 @@
 .Classroom .NoClass {
   background-color: #fefefe;
-  border: 0.1px rgb(250, 250, 250) solid;
+  border: 0.1px #fafafa solid;
   padding: 15px 0 60px 0;
-
-  -webkit-box-shadow: -0.5px 0.5px 3px 2px rgba(245, 245, 245, 1);
-  -moz-box-shadow: -0.5px 0.5px 3px 2px rgba(245, 245, 245, 1);
-  box-shadow: -0.5px 0.5px 3px 2px rgba(245, 245, 245, 1);
+  -webkit-box-shadow: -0.5px 0.5px 3px 2px whitesmoke;
+  -moz-box-shadow: -0.5px 0.5px 3px 2px whitesmoke;
+  box-shadow: -0.5px 0.5px 3px 2px whitesmoke;
 }
-
 .Classroom .NoClass #heading {
   font-size: 30px;
   font-weight: 100;
   font-family: Arial, Helvetica, sans-serif;
   margin-bottom: 20px;
 }
-
 .Classroom .NoClass img {
   margin-top: 50px;
   width: 125px;
@@ -22,26 +19,26 @@
 }
 
 .Classroom .ListOfClasses {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  padding: 13.5px;
+  grid-template-columns: repeat(auto-fit, 300px);
+  grid-gap: 0.8rem;
   justify-content: space-between;
-  padding: 1em;
+  align-content: flex-start;
 }
-
-.Classroom .ListOfClasses:after {
-  content: "";
-  flex: auto;
-  justify-content: space-between;
-  width: 300px;
-}
-
 .Classroom .ListOfClasses .ClassCard {
   margin: 0.5em;
-  -webkit-box-shadow: -1px -1px 15px -10px rgba(0, 0, 0, 1);
-  -moz-box-shadow: -1px -1px 15px -10px rgba(0, 0, 0, 1);
-  box-shadow: -1px -1px 15px -10px rgba(0, 0, 0, 1);
+  -webkit-box-shadow: -1px -1px 15px -10px black;
+  -moz-box-shadow: -1px -1px 15px -10px black;
+  box-shadow: -1px -1px 15px -10px black;
 }
-
+.Classroom .ListOfClasses .ClassCard .ant-card-meta-detail * {
+  word-wrap: break-word;
+  white-space: normal;
+}
+.Classroom .ListOfClasses .ClassCard .ant-card {
+  min-width: 300px;
+}
 .Classroom .ListOfClasses .AddClassCard {
   width: 300px;
   height: 322.84px;
@@ -52,46 +49,29 @@
 }
 
 .ClassForm p {
-  margin-bottom: 3px;
+  margin-bottom: 4px;
 }
-
 .ClassForm .ant-input {
-  margin-bottom: 30px;
+  margin-bottom: 33px;
 }
-
 .ClassForm .Picker {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  vertical-align: middle;
+  margin-bottom: 25px;
 }
-
-.ClassForm .Picker p {
-  width: 52px;
-}
-
 .ClassForm .ant-select {
-  margin-left: 8px;
   width: 60%;
 }
-
-.ClassForm .ant-modal-content {
-  min-height: 464px;
-}
-
 .ClassForm .ant-modal-body {
-  min-height: 390px;
+  min-height: 410px;
   padding: 20px;
 }
-
 .ClassForm .ant-modal-footer {
   max-height: 53px;
 }
-
 .ClassForm .ant-steps {
   margin-bottom: 20px;
 }
-
 .ClassForm .ant-upload {
   margin-bottom: 10px;
 }
+
+/*# sourceMappingURL=Classroom.css.map */

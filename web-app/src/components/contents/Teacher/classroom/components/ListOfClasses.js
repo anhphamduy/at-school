@@ -1,9 +1,10 @@
 import React from "react";
-import { Card, Icon, Avatar } from "antd";
+import { Card, Icon } from "antd";
 import { getClassTeacher } from "../../../../../api/classroom";
 import NewClassForm from "./ClassForm/NewClassForm";
 import { createClass } from "../../../../../api/classroom";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
+import ClassCard from "./ClassCard/ClassCard"
 import "../../../../../animations/fade.css";
 
 export default class ListOfClasses extends React.Component {
@@ -98,38 +99,6 @@ class AddClassCard extends React.Component {
               opacity: this.state.buttonOpacity,
               transition: "opacity 0.3s"
             }}
-          />
-        </Card>
-      </div>
-    );
-  }
-}
-
-export class ClassCard extends React.Component {
-  render() {
-    return (
-      <div className="ClassCard">
-        <Card
-          loading={this.props.loading}
-          style={{ width: 300 }}
-          cover={
-            <img
-              alt="example"
-              src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
-            />
-          }
-          actions={[
-            <Icon type="setting" />,
-            <Icon type="edit" />,
-            <Icon type="ellipsis" />
-          ]}
-        >
-          <Card.Meta
-            avatar={
-              <Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
-            }
-            title={this.props.name}
-            description={this.props.description}
           />
         </Card>
       </div>

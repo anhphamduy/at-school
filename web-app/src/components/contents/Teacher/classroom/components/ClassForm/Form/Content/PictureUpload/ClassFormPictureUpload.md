@@ -1,0 +1,5 @@
+ClassFormPictureUpload example:
+
+```js
+<ClassFormPictureUpload />
+```

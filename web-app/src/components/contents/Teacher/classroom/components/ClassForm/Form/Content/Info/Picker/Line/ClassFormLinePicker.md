@@ -1,0 +1,5 @@
+LinePicker example:
+
+```js
+<ClassFormLinePicker />
+```
