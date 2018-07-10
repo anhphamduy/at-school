@@ -1,7 +1,7 @@
 import React from "react";
 import { Card, Icon, Avatar } from "antd";
 import { getClassTeacher } from "../../../../../api/classroom";
-import NewClassForm from "./NewClassForm";
+import NewClassForm from "./ClassForm/NewClassForm";
 import { createClass } from "../../../../../api/classroom";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
 import "../../../../../animations/fade.css";
@@ -105,7 +105,7 @@ class AddClassCard extends React.Component {
   }
 }
 
-class ClassCard extends React.Component {
+export class ClassCard extends React.Component {
   render() {
     return (
       <div className="ClassCard">

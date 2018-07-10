@@ -1,7 +1,7 @@
 import React from "react";
 import { Button } from "antd";
 import { createClass } from "../../../../../api/classroom";
-import NewClassForm from "./NewClassForm";
+import NewClassForm from "./ClassForm/NewClassForm";
 
 export default class NoClass extends React.Component {
   state = {

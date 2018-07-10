@@ -13,11 +13,11 @@ class Classroom extends React.Component {
   };
 
   componentDidMount() {
-    this.getClassIds()
+    this.getClassIds();
   }
 
   getClassIds = async () => {
-    this.setState({ready: false})
+    this.setState({ ready: false });
     teacherHasClass(this.props.userInfo.token)
       .then(hasClass => {
         if (hasClass.result) {
@@ -31,7 +31,7 @@ class Classroom extends React.Component {
         }
       })
       .catch(err => console.log(err));
-  }
+  };
 
   render() {
     return (
@@ -43,9 +43,12 @@ class Classroom extends React.Component {
             style={{ marginTop: "5vh", minHeight: "95vh" }}
           >
             {!this.state.hasClass ? (
-              <NoClass addClass={this.getClassIds}/>
+              <NoClass addClass={this.getClassIds} />
             ) : (
-              <ListOfClasses token={this.props.userInfo.token} classIds={this.state.classIds} />
+              <ListOfClasses
+                token={this.props.userInfo.token}
+                classIds={this.state.classIds}
+              />
             )}
           </div>
         ) : null}
